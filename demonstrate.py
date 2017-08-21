@@ -8,13 +8,6 @@ from nti.data.algorithms import KMEANS
 from nti.data.algorithms import ENTROPY
 from nti.data.algorithms import SVM
 
-from nti.data.algorithms.clustering.geometric import KMeans
-
-from nti.data.algorithms.clustering.density import DBScan
-from nti.data.algorithms.clustering.density import Entropic
-
-from nti.data.algorithms.supervised.support_vector_machine import SupportVectorMachine
-
 from nti.data.fake import DataGenerator
 from nti.data.fake import Plotter
 from nti.data.fake import Plotter2D

@@ -100,4 +100,7 @@ ENV/
 # mypy
 .mypy_cache/
 
-# database/
+# Expose no information about database
+nti/data/database/
+
+*.DS_Store

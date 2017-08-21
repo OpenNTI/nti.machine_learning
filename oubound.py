@@ -8,11 +8,6 @@ from nti.data.algorithms import DB_SCAN
 from nti.data.algorithms import KMEANS
 from nti.data.algorithms import ENTROPY
 
-from nti.data.algorithms.clustering.geometric import KMeans
-
-from nti.data.algorithms.clustering.density import DBScan
-from nti.data.algorithms.clustering.density import Entropic
-
 from nti.data.problems.oubound import OUBoundEssayStats
 from nti.data.problems.oubound import build_essay_classifier
 from nti.data.problems.oubound import predict_essay
@@ -42,7 +37,7 @@ def _load_file(file_name):
         length = len(lines)
         count = 0
         for line in lines[1:]:
-            db.insert(line)
+            db.insert_essay(line)
             if count % 1000 == 0:
                 logging.info('%s%%' % int((count / length) * 100))
             count += 1
