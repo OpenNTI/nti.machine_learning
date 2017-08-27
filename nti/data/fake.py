@@ -12,6 +12,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from random import randint
 
 from nti.data.algorithms.common import Point
+from nti.data.algorithms.common import SupervisedPoint
 
 class Functions():
     
@@ -72,6 +73,16 @@ class DataGenerator():
             points.append(Point(*[x, func_out + q + sup_vec])) 
         return points
 
+class SupervisedGenerator(DataGenerator):
+    
+    def generate_sample_data(self):
+        points = self._get_data(True)
+        sup_points = []
+        for point in points:
+            sup_point = SupervisedPoint(*point.values)
+            sup_point.correct = 0 if sup_point.get(0) < 50 else 1
+            sup_points.append(sup_point)
+        return sup_points
 
 class Plotter():
     """
@@ -100,10 +111,6 @@ class Plotter2D():
         self.val = correct
         
     def plot(self, title):
-        fig, ax = pyplot.subplots()
+        _, ax = pyplot.subplots()
         ax.scatter(self.x, self.y, c='black')
-#         line = lines.Line2D([0,1], [0,1], color='red')
-#         transform = ax.transAxes
-#         line.set_transform(transform)
-#         ax.add_line(line)
         pyplot.show()

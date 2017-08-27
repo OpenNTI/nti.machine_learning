@@ -38,3 +38,9 @@ class Point():
             raise ValueError('Length of label list must be equal to length '
                             'of value list.')
         return dict(zip(labels, self.values))
+
+class SupervisedPoint(Point):
+    
+    def __init__(self, *args):
+        super(SupervisedPoint, self).__init__(*args)
+        self.correct = 0

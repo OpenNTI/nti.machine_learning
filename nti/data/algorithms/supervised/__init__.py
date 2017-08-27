@@ -19,7 +19,7 @@ class SampleDataSet():
     _categorical_numeric = []
     _categorical_dict = {}
     
-    def __init__(self, x_s, y_s, multi_class=None):
+    def __init__(self, x_s, y_s, multi_class=None, as_batch=False):
         if len(x_s) != len(y_s):
             raise ValueError("X and Y must be the same length")
         if multi_class is not None:
@@ -30,7 +30,10 @@ class SampleDataSet():
             self.sample_points.append(SampleDataPoint(x_s[i], y_s[i]))
         self.multi_class = multi_class
         self.idx = 0
-        
+    
+    def _get_buckets(self):
+        indxs = [i for i in range(len(self.sample_points))]
+    
     def is_multi_classification(self):
         return self.multi_class is not None
     
@@ -46,10 +49,12 @@ class SampleDataSet():
             X.append(point.get_attributes_as_list())
         return array(X)
     
-    def get_Y_as_numpy(self):
+    def get_Y_as_numpy(self, rank=False):
         Y = []
         for point in self.sample_points:
-            Y.append(point.get_actual_answer())
+            p = point.get_actual_answer()
+            p = [p] if rank else p
+            Y.append(p)
         return array(Y)
 
     def get_categorical(self, inp):

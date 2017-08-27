@@ -4,8 +4,10 @@ from nti.data.algorithms.clustering.density import Entropic
 from nti.data.algorithms.clustering.geometric import KMeans
 
 from nti.data.algorithms.supervised.support_vector_machine import SupportVectorMachine
+from nti.data.algorithms.supervised.neural_network import NeuralNetwork
 
 DB_SCAN = DBScan.__name__
 KMEANS = KMeans.__name__
 ENTROPY = Entropic.__name__
 SVM = SupportVectorMachine.__name__
+NN = NeuralNetwork.__name__
