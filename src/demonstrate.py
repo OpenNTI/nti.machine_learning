@@ -10,7 +10,6 @@ from nti.data.algorithms import Entropic
 
 from nti.data.fake import DataGenerator
 from nti.data.fake import Plotter
-from nti.data.fake import Functions
 
 from nti.data import NTIDataFrame
 

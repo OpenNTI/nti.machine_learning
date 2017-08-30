@@ -8,16 +8,6 @@ from matplotlib import pyplot
 from mpl_toolkits.mplot3d import Axes3D
 
 from random import randint
-
-class Functions():
-    
-    @staticmethod
-    def LINEAR(x):
-        return x
-    
-    @staticmethod
-    def QUADRATIC(x):
-        return x**2
     
 class DataGenerator():
     """
@@ -82,18 +72,4 @@ class Plotter():
     def plot(self, title):
         self.ax.scatter(self.x, self.y, self.z, c=self.cluster)
         pyplot.suptitle(title)
-        pyplot.show()
-    
-class Plotter2D():
-    """
-    Plot 2 dimensional data
-    """
-    def __init__(self, points, correct):
-        self.x = [p.get(0) for p in points]
-        self.y = [p.get(1) for p in points]
-        self.val = correct
-        
-    def plot(self, title):
-        _, ax = pyplot.subplots()
-        ax.scatter(self.x, self.y, c='black')
         pyplot.show()
