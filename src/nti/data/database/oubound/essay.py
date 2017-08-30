@@ -13,7 +13,6 @@ from sqlalchemy.types import PickleType
 from nti.data import FORMAT
 
 from nti.data.database import AbstractTable
-
 from nti.data.database import PersistentBase
 
 from nti.data.database.oubound.base import Student
@@ -21,7 +20,8 @@ from nti.data.database.oubound.base import Student
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 logging.getLogger(__name__)
 
-class Essay(PersistentBase):
+class Essay(PersistentBase,
+            AbstractTable):
     """
     Object representation of the Essay table in the 
     OUBoundEssay database.
@@ -37,7 +37,8 @@ class Essay(PersistentBase):
     
     ForeignKeyConstraint([sooner_id], [Student.sooner_id])
 
-class Sentiments(PersistentBase):
+class Sentiments(PersistentBase,
+                 AbstractTable):
     """
     Object representaiton of the Sentiments table in the 
     OUBoundEssay database.

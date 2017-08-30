@@ -1,8 +1,15 @@
+import logging
+
 from sqlalchemy import create_engine
 
 from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy.orm import sessionmaker
+
+from nti.data import FORMAT
+
+logging.basicConfig(format=FORMAT, level=logging.DEBUG)
+logging.getLogger(__name__)
 
 # Base of sqlalchemy based MySQL tables
 PersistentBase = declarative_base()
@@ -22,6 +29,15 @@ class AbstractDatabase():
 
     def session(self):
         return self.session
+    
+    def insert_obj(self, obj, **kwargs):
+        new_obj = obj(**kwargs)
+        try:
+            self.session.add(new_obj)
+            self.session.commit()
+        except:
+            self.session.rollback()
+            logging.error('Could not insert new object into database.')
 
 class AbstractTable():
     """

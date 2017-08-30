@@ -12,7 +12,7 @@ from nti.data.algorithms import KMeans
 
 from nti.data.database.oubound import get_data_from_json
 from nti.data.database.oubound import get_columns
-from nti.data.database.oubound import insert_interest
+from nti.data.database.oubound import insert_obj
 
 from nti.data.problems.oubound import OUBoundEssayStats
 from nti.data.problems.oubound import build_essay_classifier
@@ -32,7 +32,7 @@ def _load_interest(file_name):
         for key in keyword_args:
             if key != 'sooner_id':
                 keyword_args[key] = True if keyword_args[key] == '1' else False
-        insert_interest(**keyword_args)
+        insert_obj("Interests", **keyword_args)
     logging.info('Done.')
 
 def _read_json(file_name):
@@ -114,7 +114,7 @@ def ouboundessay(algorithm, algo_args, file, size):
 @click.option('-i', '--interest', is_flag=True)
 def load(file_name, essay, finance, interest):
     """
-    Loads a csv file of OUBound essays into the MySQL database.
+    Loads a resource into the OUBoundEssay MySQL db.
     """
     if essay:
         _load_essay(file_name)

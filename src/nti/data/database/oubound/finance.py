@@ -11,6 +11,7 @@ from sqlalchemy.types import Integer
 
 from nti.data import FORMAT
 
+from nti.data.database import AbstractTable
 from nti.data.database import PersistentBase
 
 from nti.data.database.oubound.base import Student
@@ -18,7 +19,8 @@ from nti.data.database.oubound.base import Student
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 logging.getLogger(__name__)
 
-class Expense(PersistentBase):
+class Expense(PersistentBase,
+              AbstractTable):
     
     KEYS = ['sooner_id', 'title', 'description', 'amount']
     
@@ -31,7 +33,8 @@ class Expense(PersistentBase):
     
     ForeignKeyConstraint([sooner_id], [Student.sooner_id])
 
-class Scholarship(PersistentBase):
+class Scholarship(PersistentBase,
+                  AbstractTable):
     
     KEYS = ['sooner_id', 'title', 'description', 'amount']
     
@@ -44,7 +47,8 @@ class Scholarship(PersistentBase):
     
     ForeignKeyConstraint([sooner_id], [Student.sooner_id])
 
-class Award(PersistentBase):
+class Award(PersistentBase,
+            AbstractTable):
     
     KEYS = ['sooner_id', 'title', 'description', 'amount']
     
@@ -57,7 +61,8 @@ class Award(PersistentBase):
     
     ForeignKeyConstraint([sooner_id], [Student.sooner_id])
     
-class WorkContrib(PersistentBase):
+class WorkContrib(PersistentBase,
+                  AbstractTable):
     
     __tablename__ = 'Work'
     
@@ -67,7 +72,8 @@ class WorkContrib(PersistentBase):
     
     ForeignKeyConstraint([sooner_id], [Student.sooner_id])
     
-class FamilyContrib(PersistentBase):
+class FamilyContrib(PersistentBase,
+                    AbstractTable):
     
     __tablename__ = 'Family'
     

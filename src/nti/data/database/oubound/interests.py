@@ -8,6 +8,7 @@ from sqlalchemy.types import Boolean
 
 from nti.data import FORMAT
 
+from nti.data.database import AbstractTable
 from nti.data.database import PersistentBase
 
 from nti.data.database.oubound.base import Student
@@ -15,7 +16,8 @@ from nti.data.database.oubound.base import Student
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 logging.getLogger(__name__)
 
-class Interests(PersistentBase):
+class Interests(PersistentBase,
+                AbstractTable):
     
     KEYS = ['sooner_id', 'clubs_or_orgs','community_services',
             'greek', 'intramural_sports', 'honors', 'study_abroad',
