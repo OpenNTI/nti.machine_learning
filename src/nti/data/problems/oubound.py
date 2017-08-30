@@ -145,19 +145,6 @@ def build_essay_classifier(title):
         logging.error('%s already used as classifier name.' % title)
     db.close()
 
-def predict_essay(soonerid, classifier_name):
-    logging.info('Pulling sentiment tuple...')
-    sentiment = get_sentiments_by_soonerid(soonerid)
-    if sentiment is None:
-        logging.error('No student found with that student id.')
-        return
-    logging.info('Pulling model %s...' % classifier_name)
-    model = get_model(classifier_name)
-    if model is None:
-        logging.error('No model found by that title.')
-        return
-    result = model.classify(sentiment)
-    logging.info('Student %s predicted with essay type %s.' % (soonerid, result))
     
     
     

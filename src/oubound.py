@@ -1,21 +1,57 @@
 import click
 import logging
 import codecs
+import glob
+import json
 
 from csv import reader
 
-from nti.data.algorithms import DB_SCAN
-from nti.data.algorithms import KMEANS
-from nti.data.algorithms import ENTROPY
+from nti.data.algorithms import DBScan
+from nti.data.algorithms import Entropic
+from nti.data.algorithms import KMeans
+
+from nti.data.database.oubound import get_data_from_json
+from nti.data.database.oubound import get_columns
+from nti.data.database.oubound import insert_obj
 
 from nti.data.problems.oubound import OUBoundEssayStats
 from nti.data.problems.oubound import build_essay_classifier
-from nti.data.problems.oubound import predict_essay
 
 from nti.data.database.oubound import OUBoundEssayDB
 
 # Available algorithm options
-ALGOS = [DB_SCAN, KMEANS, ENTROPY]
+ALGOS = [DBScan.__name__, KMeans.__name__, Entropic.__name__]
+
+def _load_interest(file_name):
+    logging.info('Loading file %s...' % file_name)
+    with open(file_name, 'r')as f:
+        lines = [line for line in reader(f)]
+    keys = get_columns("Interests")
+    for line in lines[1:]:
+        keyword_args = dict(zip(keys, line))
+        for key in keyword_args:
+            if key != 'sooner_id':
+                keyword_args[key] = True if keyword_args[key] == '1' else False
+        insert_obj("Interests", **keyword_args)
+    logging.info('Done.')
+
+def _read_json(file_name):
+    with open(file_name) as f:
+        data = json.load(f)
+    if not 'full.json' in file_name:
+        get_data_from_json(data)
+    
+
+def _load_finance(file_name, is_directory=False):
+    if is_directory:
+        logging.info('Opening directory %s...' % file_name)
+        for f in glob.glob(file_name+"/*.json"):
+            logging.info('Reading file %s...' % f)
+            _read_json(f)
+    else:
+        logging.info('Reading file %s...' % file_name)
+        _read_json(file_name)
+    logging.info('Done.')
 
 def _do_essay_analysis(algorithm, algo_args, out_file, size):
     """
@@ -26,7 +62,7 @@ def _do_essay_analysis(algorithm, algo_args, out_file, size):
     stats = OUBoundEssayStats(algo_class, *algo_args)
     stats.build(out_file, size)
 
-def _load_file(file_name):
+def _load_essay(file_name):
     """
     Loads a csv file of OUBound essays into the MySQL database.
     """
@@ -51,12 +87,6 @@ def _build_predict(title):
     """
     build_essay_classifier(title)
 
-def _predict(soonerid, classifier_name):
-    """
-    Predict essay type of person soonerid
-    """
-    predict_essay(soonerid, classifier_name)
-
 @click.group()
 def oubound():
     """
@@ -68,7 +98,7 @@ def oubound():
 @click.argument('algorithm', nargs=1, type=click.Choice(ALGOS))
 @click.argument('algo_args', nargs=-1)
 @click.option('--file', '-f', help='Output file for statistics')
-@click.option('--size', '-s', help='How many factors will be shows in analysis', type=int)
+@click.option('--size', '-s', help='How many factors will be shown in analysis', type=int)
 def ouboundessay(algorithm, algo_args, file, size):
     """
     Performs analysis on the OUBoundEssay MySQL database.
@@ -79,11 +109,19 @@ def ouboundessay(algorithm, algo_args, file, size):
 
 @click.command()
 @click.argument('file_name', nargs=1)
-def load(file_name):
+@click.option('-e', '--essay', is_flag=True)
+@click.option('-f', '--finance', is_flag=True)
+@click.option('-i', '--interest', is_flag=True)
+def load(file_name, essay, finance, interest):
     """
-    Loads a csv file of OUBound essays into the MySQL database.
+    Loads a resource into the OUBoundEssay MySQL db.
     """
-    _load_file(file_name)
+    if essay:
+        _load_essay(file_name)
+    elif finance:
+        _load_finance(file_name, is_directory=True)
+    elif interest:
+        _load_interest(file_name)
 
 @click.command()
 @click.option('-t', '--title', help="Title of the resulting model")
@@ -95,19 +133,10 @@ def build_predict(title):
     title = "Essay_Classified" if title is None else title
     _build_predict(title)
 
-@click.command()
-@click.argument('soonerid', type=int)
-@click.argument('classifier_name', type=str)
-def predict(soonerid, classifier_name):
-    """
-    Predict essay type of person soonerid
-    """
-    _predict(soonerid, classifier_name)
 
 oubound.add_command(ouboundessay)
 oubound.add_command(load)
 oubound.add_command(build_predict)
-oubound.add_command(predict)
 
 if __name__ == '__main__':
     oubound()
