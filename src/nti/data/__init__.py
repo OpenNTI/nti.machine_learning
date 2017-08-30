@@ -18,7 +18,7 @@ class Model():
         """
         Get the pickled model for persistent storage
         """
-        return cPickle(self)
+        return cPickle.dumps(self)
 
 class AbstractDataSet():
     """

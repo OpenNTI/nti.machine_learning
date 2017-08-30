@@ -1,5 +1,5 @@
 """
-This file provides the solutions and anlysis for problems
+This file provides the solutions and anlaysis for problems
 given by OUBound.
 """
 
@@ -8,8 +8,7 @@ import logging
 from sqlalchemy.exc import IntegrityError
 
 from nti.data import FORMAT
-
-from nti.data.algorithms.common import Point
+from nti.data import NTIDataFrame
 
 from nti.data.algorithms.utils import variance
 
@@ -17,9 +16,8 @@ from nti.data.algorithms.supervised.support_vector_machine import SupportVectorM
 
 from nti.data.database.oubound import get_sentiments
 from nti.data.database.oubound import get_sentiments_by_soonerid
-from nti.data.database.oubound import get_model
 from nti.data.database.oubound import Sentiments
-from nti.data.database.oubound import OUBoundEssayDB
+from nti.data.database.oubound import insert_obj
 
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 logging.getLogger(__name__)
@@ -83,9 +81,6 @@ class OUBoundEssayStats():
     Performs clustering and fetches and prints the resulting 
     statistics using a user-given clustering algorithm
     """
-    def _to_points(self, sentiment_tuples):
-        return [Point(*s) for s in sentiment_tuples]
-
     def _construct_clustering(self, algo, args):
         algo_args = [self.points] + list(args)
         return algo(*algo_args)
@@ -113,7 +108,7 @@ class OUBoundEssayStats():
         with open(out_file, 'w') as out:
             out.write('Run Parameters: \nSize: %s\n\n' % size)
             for v in variables:
-                self.points = self._to_points(get_sentiments(variable=v))
+                self.points = NTIDataFrame(get_sentiments(variable=v), columns=Sentiments.KEYS)
                 self.algo = self._construct_clustering(self.clustering_algo, self.args)
                 logging.info('Clustering essay sentiments for variable %s...' % v)
                 clusters = self.algo.cluster()
@@ -127,23 +122,19 @@ class OUBoundEssayStats():
 
 def build_essay_classifier(title):
     logging.info('Pulling sentiment tuples...')
-    sentiments = get_sentiments(include_variable=True)
-    inputs = [s[:-1] for s in sentiments]
-    outputs = [s[-1] for s in sentiments]
+    sentiments = NTIDataFrame(get_sentiments(include_variable=True), columns=Sentiments.KEYS[2:]+["variable"])
     logging.info('Training classifier...')
-    svm = SupportVectorMachine(inputs, outputs)
+    svm = SupportVectorMachine(sentiments, "variable")
     svm.train()
-    logging.info('Support Vector Machine trained with %.2f%% accuracy on validation.' % svm.get_success_rate())
+    logging.info('Support Vector Machine trained with %.2f%% accuracy on validation.' % (svm.success_rate*100.0,))
     logging.info('Getting classifier pickle...')
     pickle = svm.get_pickle()
     logging.info('Saving model...')
-    db = OUBoundEssayDB()
     try:
-        db.insert_model(pickle, title)
+        insert_obj("Model", pickle=pickle, title=title)
         logging.info('Saved as %s.' % title)
     except IntegrityError:
         logging.error('%s already used as classifier name.' % title)
-    db.close()
 
     
     
