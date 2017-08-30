@@ -12,11 +12,9 @@ def distance(p1, p2):
     """
     Euclidean distance between two points
     """
-    if not p1.dimensions == p2.dimensions:
+    if not len(p1) == len(p2):
         raise ValueError('Points must have the same dimensions.')
-    summation = 0
-    for i in range(0, p1.dimensions):
-        summation += (p2.get(i) - p1.get(i))**2
+    summation = sum((p2[i] - p1[i])**2 for i in range(len(p1)))
     return sqrt(summation)
 
 

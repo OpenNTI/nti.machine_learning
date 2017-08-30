@@ -1,1 +1,0 @@
-FORMAT = '%(asctime)-15s %(message)s'
