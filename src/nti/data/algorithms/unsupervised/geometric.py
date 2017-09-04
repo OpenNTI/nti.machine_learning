@@ -60,5 +60,5 @@ class KMeans(AbstractClusterModel):
                     change = True
                     self._move_clusters(i, new_cluster)
             self.centers = self._data.get_cluster_centers()
-        return self._data._data
+        return self._data
     

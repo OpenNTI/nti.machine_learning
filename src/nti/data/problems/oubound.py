@@ -66,12 +66,11 @@ class OUBoundClusterStats():
         # Return a dictionary that buckets the mean sentiment into severity levels
         return {i: _get_severity(self.center[i]) for i in ident_keys}
     
-    def __init__(self, cluster, points, size):
+    def __init__(self, cluster, frame, points, size):
         self.points = points
         self.cluster = cluster
-        self.number = cluster.num
-        self.center = self.cluster.center.provide_labels(self.label_keys)
-        self.size = self.cluster.length()
+        self.center = frame.get_cluster_centers()[cluster["cluster"][0]]
+        self.size = frame.size()
         self.variances = self._get_variances()
         self.identifying_factors = self._get_ident_factors(size)
         self.identifying_variances = {key: self.variances[key] for key in self.identifying_factors.keys()}
@@ -88,13 +87,12 @@ class OUBoundEssayStats():
     def __init__(self, clustering_algo, *args):
         self.clustering_algo = clustering_algo
         self.args = args
-        
-    def _print_cluster(self, cluster, out_file, size):
+    
+    def _print_cluster(self, cluster, frame, out_file, size):
         """
         Print results
         """
-        stats = OUBoundClusterStats(cluster, self.points, size)
-        out_file.write("Group Number: %s\n" % stats.number)
+        stats = OUBoundClusterStats(cluster, frame, self.points, size)
         out_file.write("Group Size: %s\n" % stats.size)
         out_file.write("Group Identifying Factors: \n")
         for key, value in stats.identifying_factors.items():
@@ -108,15 +106,16 @@ class OUBoundEssayStats():
         with open(out_file, 'w') as out:
             out.write('Run Parameters: \nSize: %s\n\n' % size)
             for v in variables:
-                self.points = NTIDataFrame(get_sentiments(variable=v), columns=Sentiments.KEYS)
+                self.points = NTIDataFrame(get_sentiments(variable=v), columns=Sentiments.KEYS[2:])
                 self.algo = self._construct_clustering(self.clustering_algo, self.args)
                 logging.info('Clustering essay sentiments for variable %s...' % v)
-                clusters = self.algo.cluster()
+                exit_data = self.algo.cluster()
+                clusters = exit_data.get_clusters()
                 logging.info('Clustered. Printing statistics...')
                 out.write("Variable %s -----\n" % v)
                 out.write("Number of groups: %s\n" % len(clusters))
                 for c in clusters:
-                    self._print_cluster(c, out, size)
+                    self._print_cluster(c, exit_data, out, size)
         logging.info('Statistics written to %s.' % out_file)
         logging.info('Finished.')
 

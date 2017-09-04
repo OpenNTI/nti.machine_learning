@@ -63,6 +63,13 @@ class UnsupervisedDataSet(AbstractDataSet):
     def size(self):
         return self._size
     
+    def get_clusters(self):
+        vals = self._data[self._CLUSTER].unique()
+        results = []
+        for c in vals:
+            results.append(self._data[self._data[self._CLUSTER] == c])
+        return results
+    
     def __iter__(self):
         return iter(self._data.index.values)
     
