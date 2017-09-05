@@ -5,6 +5,11 @@ given by OUBound.
 
 import logging
 
+from pandas import concat
+from pandas import merge
+
+import statsmodels.api as sm
+
 from sqlalchemy.exc import IntegrityError
 
 from nti.data import FORMAT
@@ -18,6 +23,10 @@ from nti.data.database.oubound import get_sentiments
 from nti.data.database.oubound import get_sentiments_by_soonerid
 from nti.data.database.oubound import Sentiments
 from nti.data.database.oubound import insert_obj
+from nti.data.database.oubound import get_avg_student_response_measures
+from nti.data.database.oubound import get_student_total_aid
+from nti.data.database.oubound import get_student_interests
+from nti.data.database.oubound import get_student_responses_with_variable
 
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 logging.getLogger(__name__)
@@ -135,6 +144,38 @@ def build_essay_classifier(title):
     except IntegrityError:
         logging.error('%s already used as classifier name.' % title)
 
-    
-    
+def get_response_aid_correlation(variable=None):
+    logging.info('Pulling data...')
+    if variable is None:
+        avg_response = get_avg_student_response_measures()
+    else:
+        avg_response = get_student_responses_with_variable(variable)
+    aid = get_student_total_aid()
+    ids = avg_response.sooner_id.unique()
+    results = []
+    for id in ids:
+        sub_frame = avg_response.loc[avg_response.sooner_id == id]
+        results.append(sub_frame.mean(axis=0).to_frame().transpose())
+    total_frame = concat(results)
+    result = merge(total_frame, aid, on="sooner_id").drop("sooner_id", axis=1)
+    X = list(result.columns.values)[:-1]
+    X = result[X]
+    Y = [list(result.columns.values)[-1]]
+    Y = result[Y]
+    model = sm.OLS(Y,X).fit()
+    logging.info('Summary:')
+    print(model.summary())
+
+def get_interest_aid_correlation():
+    logging.info('Pulling data...')
+    interests = get_student_interests()
+    aid = get_student_total_aid()
+    result = merge(interests, aid, on="sooner_id").drop("sooner_id", axis=1)
+    X = list(result.columns.values)[:-1]
+    X = result[X]
+    Y = [list(result.columns.values)[-1]]
+    Y = result[Y]
+    model = sm.OLS(Y,X).fit()
+    logging.info('Summary:')
+    print(model.summary())
     

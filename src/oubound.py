@@ -16,6 +16,8 @@ from nti.data.database.oubound import insert_obj
 
 from nti.data.problems.oubound import OUBoundEssayStats
 from nti.data.problems.oubound import build_essay_classifier
+from nti.data.problems.oubound import get_response_aid_correlation
+from nti.data.problems.oubound import get_interest_aid_correlation
 
 from nti.data.database.oubound import OUBoundEssayDB
 
@@ -87,6 +89,12 @@ def _build_predict(title):
     """
     build_essay_classifier(title)
 
+def _get_response_aid_correlation(essay):
+    get_response_aid_correlation(essay)
+
+def _get_interest_aid_correlation():
+    get_interest_aid_correlation()
+
 @click.group()
 def oubound():
     """
@@ -133,10 +141,24 @@ def build_predict(title):
     title = "Essay_Classified" if title is None else title
     _build_predict(title)
 
+@click.command()
+@click.argument('predictor', nargs=1, type=click.Choice(['interest', 'response']))
+@click.option('-e', '--essay', help='The essay variable to examine.', type=click.Choice(['Freshman.Essay.Response', 'Scholarship.Leadership.Essay',
+                                                                                         'Scholarship.Community.Essay', 'Scholarship.Academic.Major.Essay']))
+def aid_correlation(predictor, essay):
+    """
+    Finds the correlation coefficient between a predictor
+    and the amount of aid received
+    """
+    if predictor == 'interest':
+        _get_interest_aid_correlation()
+    else:
+        _get_response_aid_correlation(essay)
 
 oubound.add_command(ouboundessay)
 oubound.add_command(load)
 oubound.add_command(build_predict)
+oubound.add_command(aid_correlation)
 
 if __name__ == '__main__':
     oubound()
