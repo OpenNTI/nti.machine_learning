@@ -23,6 +23,16 @@ class AbstractDatabase():
         self.engine = create_engine(
             conn_str, echo=False)
         self.session = sessionmaker(bind=self.engine)()
+        
+    def __enter__(self):
+        try:
+            self.__init__()
+        except AttributeError:
+            logging.error('Must provide database connection string')
+        return self
+            
+    def __exit__(self, type, value, traceback):
+        self.close()
 
     def engine(self):
         return self.engine
@@ -38,6 +48,9 @@ class AbstractDatabase():
         except:
             self.session.rollback()
             logging.error('Could not insert new object into database.')
+            
+    def close(self):
+        self.session.close_all()
 
 class AbstractTable():
     """

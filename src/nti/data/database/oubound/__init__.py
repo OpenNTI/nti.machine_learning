@@ -1,6 +1,9 @@
 import logging
 
+from pandas import read_sql
+
 from nti.data import FORMAT
+from nti.data import NTIDataFrame
 
 from nti.data.database import AbstractDatabase
 
@@ -44,7 +47,7 @@ class OUBoundEssayDB(AbstractDatabase):
               "Interests"]
     
     def __init__(self):
-        super(OUBoundEssayDB, self).__init__(self.CONN_STR)    
+        super(OUBoundEssayDB, self).__init__(self.CONN_STR)
     
     def _insert_essay_from_str(self, essay_str):
         """
@@ -102,8 +105,27 @@ class OUBoundEssayDB(AbstractDatabase):
         student.total_aid = total_aid
         self.session.commit()
     
-    def close(self):
-        self.session.close_all()
+    def get_student_responses(self, with_variable=True):
+        students = read_sql(self.session.query(Sentiments).statement, self.session.bind)
+        if not with_variable:
+            students = students.drop('variable', axis=1)
+        return students
+    
+    def get_student_responses_with_variable(self, variable=None):
+        if variable is None:
+            return self.get_student_responses(with_variable=True)
+        responses = self.get_student_responses(with_variable=True)
+        for_var = responses[responses['variable'] == variable]
+        return for_var.drop('variable', axis=1)
+    
+    def get_student_interests(self):
+        interests = read_sql(self.session.query(Interests).statement, self.session.bind)
+        return interests
+    
+    def get_student_total_aid(self):
+        aid = read_sql(self.session.query(Student.sooner_id, Student.total_aid).statement, self.session.bind)
+        return aid
+
 
 def insert_obj(table, **kwargs):
     if table not in OUBoundEssayDB.TABLES:
@@ -149,3 +171,23 @@ def get_data_from_json(json_snippet):
     total_aid += _save_contribs_from_json(sooner_id, json_snippet, db)
     db.update_student(sooner_id, total_expenses, total_aid)
     db.close()
+
+def get_avg_student_response_measures():
+    with OUBoundEssayDB() as db:
+        students = db.get_student_responses(with_variable=False)
+    return students
+
+def get_student_total_aid():
+    with OUBoundEssayDB() as db:
+        aid = db.get_student_total_aid()
+    return aid
+
+def get_student_interests():
+    with OUBoundEssayDB() as db:
+        interests = db.get_student_interests()
+    return interests
+
+def get_student_responses_with_variable(variable=None):
+    with OUBoundEssayDB() as db:
+        responses = db.get_student_responses_with_variable(variable=variable)
+    return responses
