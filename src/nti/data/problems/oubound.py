@@ -132,7 +132,7 @@ def build_essay_classifier(title):
     logging.info('Pulling sentiment tuples...')
     sentiments = NTIDataFrame(get_sentiments(include_variable=True), columns=Sentiments.KEYS[2:]+["variable"])
     logging.info('Training classifier...')
-    svm = SupportVectorMachine(sentiments, "variable")
+    svm = SupportVectorMachine(sentiments, ["variable"])
     svm.train()
     logging.info('Support Vector Machine trained with %.2f%% accuracy on validation.' % (svm.success_rate*100.0,))
     logging.info('Getting classifier pickle...')

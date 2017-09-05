@@ -22,7 +22,7 @@ class SupervisedDataSet(AbstractDataSet):
         self._prediction_column = prediction_column
         try:
             self._prediction_data = self._data[prediction_column]
-            del self._data[prediction_column]
+            self._data = self._data.drop(prediction_column, axis=1)
         except IndexError:
             raise ValueError("Invalid prediction column.")
         self._indices = data_frame.index.values

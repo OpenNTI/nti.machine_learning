@@ -33,12 +33,12 @@ class AbstractDataSet():
         try:
             # Try to get it by key
             row = self._data.loc[index].as_matrix()
-            answer = self._prediction_data.loc[index]
+            answer = self._prediction_data.loc[index].as_matrix()
         except:
             try:
                 # If that doesn't work, get by numeric index
                 row = self._data.iloc[index].as_matrix()
-                answer = self._prediction_data.iloc[index]
+                answer = self._prediction_data.iloc[index].as_matrix()
             except:
                 raise ValueError("Index %s could not be found in data set." % (index,))
         return (row, answer)
