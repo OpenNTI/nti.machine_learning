@@ -3,7 +3,7 @@ import logging
 
 from nti.data import FORMAT
 
-from nti.data.algorithms import SupportVectorMachine
+from nti.data.algorithms import NeuralNetwork
 from nti.data.algorithms import KMeans
 from nti.data.algorithms import DBScan
 from nti.data.algorithms import Entropic
@@ -18,7 +18,6 @@ logging.getLogger(__name__)
 
 # Available algorithms
 U_ALGOS = [KMeans.__name__, DBScan.__name__, Entropic.__name__]
-S_ALGOS = [SupportVectorMachine.__name__]
 
 def _unsupervised(algo, algo_args, point_number, non_uniform):
     """
@@ -63,3 +62,5 @@ demonstrate.add_command(unsupervised)
 
 if __name__ == '__main__':
     demonstrate()
+        
+        
