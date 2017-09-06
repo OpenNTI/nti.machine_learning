@@ -10,12 +10,12 @@ from sqlalchemy.types import Text
 from sqlalchemy.types import Integer
 from sqlalchemy.types import PickleType
 
-from nti.data import FORMAT
+from nti.machine_learning import FORMAT
 
-from nti.data.database import AbstractTable
-from nti.data.database import PersistentBase
+from nti.machine_learning.database import AbstractTable
+from nti.machine_learning.database import PersistentBase
 
-from nti.data.database.oubound.base import Student
+from nti.machine_learning.database.oubound.base import Student
 
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 logging.getLogger(__name__)

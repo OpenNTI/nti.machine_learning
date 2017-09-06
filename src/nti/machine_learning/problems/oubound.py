@@ -12,21 +12,21 @@ import statsmodels.api as sm
 
 from sqlalchemy.exc import IntegrityError
 
-from nti.data import FORMAT
-from nti.data import NTIDataFrame
+from nti.machine_learning import FORMAT
+from nti.machine_learning import NTIDataFrame
 
-from nti.data.algorithms.utils import variance
+from nti.machine_learning.algorithms.utils import variance
 
-from nti.data.algorithms.supervised.support_vector_machine import SupportVectorMachine
+from nti.machine_learning.algorithms.supervised.support_vector_machine import SupportVectorMachine
 
-from nti.data.database.oubound import get_sentiments
-from nti.data.database.oubound import get_sentiments_by_soonerid
-from nti.data.database.oubound import Sentiments
-from nti.data.database.oubound import insert_obj
-from nti.data.database.oubound import get_avg_student_response_measures
-from nti.data.database.oubound import get_student_total_aid
-from nti.data.database.oubound import get_student_interests
-from nti.data.database.oubound import get_student_responses_with_variable
+from nti.machine_learning.database.oubound import get_sentiments
+from nti.machine_learning.database.oubound import get_sentiments_by_soonerid
+from nti.machine_learning.database.oubound import Sentiments
+from nti.machine_learning.database.oubound import insert_obj
+from nti.machine_learning.database.oubound import get_avg_student_response_measures
+from nti.machine_learning.database.oubound import get_student_total_aid
+from nti.machine_learning.database.oubound import get_student_interests
+from nti.machine_learning.database.oubound import get_student_responses_with_variable
 
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 logging.getLogger(__name__)
