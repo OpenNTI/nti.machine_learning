@@ -1,12 +1,22 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 This file provides the solutions and anlaysis for problems
 given by OUBound.
+
+.. $Id$
 """
+
+from __future__ import print_function, absolute_import, division
+__docformat__ = "restructuredtext en"
+
+logger = __import__('logging').getLogger(__name__)
+
 
 import logging
 
-from pandas import concat
 from pandas import merge
+from pandas import concat
 
 import statsmodels.api as sm
 
