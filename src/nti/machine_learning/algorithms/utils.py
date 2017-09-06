@@ -1,11 +1,20 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 This file provide mostly math operations for the algorithms.
 If any of this gets actually used, it should be heavily optimized, ideally in C or C++.
+
+.. $Id$
 """
 
-from math import sqrt
+from __future__ import print_function, absolute_import, division
+__docformat__ = "restructuredtext en"
+
+logger = __import__('logging').getLogger(__name__)
+
 from math import log
 from math import exp
+from math import sqrt
 
 
 def distance(p1, p2):
@@ -59,7 +68,7 @@ def entropy(points, mean_dist):
                 continue
             sim = similarity(mean_dist, points[i], points[j])
             if sim == 1.0:
-                # A value of 1 will break, so make 
+                # A value of 1 will break, so make
                 # it almost one
                 sim = .999999
             summation += (sim * log(sim, 2)) + \
