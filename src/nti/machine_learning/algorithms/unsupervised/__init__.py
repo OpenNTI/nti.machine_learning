@@ -1,5 +1,5 @@
-from nti.data import Model
-from nti.data import AbstractDataSet
+from nti.machine_learning import Model
+from nti.machine_learning import AbstractDataSet
 
 class AbstractClusterModel(Model):
     """

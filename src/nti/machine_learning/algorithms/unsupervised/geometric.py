@@ -1,8 +1,8 @@
 from random import randint
 
-from nti.data.algorithms.utils import distance
+from nti.machine_learning.algorithms.utils import distance
 
-from nti.data.algorithms.unsupervised import AbstractClusterModel
+from nti.machine_learning.algorithms.unsupervised import AbstractClusterModel
 
 class KMeans(AbstractClusterModel):
     """

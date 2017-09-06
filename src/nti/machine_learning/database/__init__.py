@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy.orm import sessionmaker
 
-from nti.data import FORMAT
+from nti.machine_learning import FORMAT
 
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 logging.getLogger(__name__)

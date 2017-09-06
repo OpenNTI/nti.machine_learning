@@ -1,6 +1,6 @@
 from sklearn.svm import SVC
 
-from nti.data.algorithms.supervised import SupervisedModel
+from nti.machine_learning.algorithms.supervised import SupervisedModel
 
 class SupportVectorMachine(SupervisedModel):
     """

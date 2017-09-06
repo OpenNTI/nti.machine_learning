@@ -45,6 +45,8 @@ setup(
     tests_require=TESTS_REQUIRE,
     install_requires=[
         'setuptools',
+        'matplotlib',
+        'pandas',
         'six',
     ],
     extras_require={

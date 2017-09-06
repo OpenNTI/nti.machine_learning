@@ -1,9 +1,9 @@
-from nti.data.algorithms.unsupervised import AbstractClusterModel
+from nti.machine_learning.algorithms.unsupervised import AbstractClusterModel
  
-from nti.data.algorithms.utils import distance
-from nti.data.algorithms.utils import similarity
-from nti.data.algorithms.utils import mean_distance
-from nti.data.algorithms.utils import entropy
+from nti.machine_learning.algorithms.utils import distance
+from nti.machine_learning.algorithms.utils import similarity
+from nti.machine_learning.algorithms.utils import mean_distance
+from nti.machine_learning.algorithms.utils import entropy
  
 class DBScan(AbstractClusterModel):
     """

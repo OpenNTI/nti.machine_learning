@@ -1,6 +1,6 @@
 from sklearn.neural_network import MLPClassifier
 
-from nti.data.algorithms.supervised import SupervisedModel
+from nti.machine_learning.algorithms.supervised import SupervisedModel
  
 class NeuralNetwork(SupervisedModel):
     """

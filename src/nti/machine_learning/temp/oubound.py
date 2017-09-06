@@ -6,20 +6,20 @@ import json
 
 from csv import reader
 
-from nti.data.algorithms import DBScan
-from nti.data.algorithms import Entropic
-from nti.data.algorithms import KMeans
+from nti.machine_learning.algorithms import DBScan
+from nti.machine_learning.algorithms import Entropic
+from nti.machine_learning.algorithms import KMeans
 
-from nti.data.database.oubound import get_data_from_json
-from nti.data.database.oubound import get_columns
-from nti.data.database.oubound import insert_obj
+from nti.machine_learning.database.oubound import get_data_from_json
+from nti.machine_learning.database.oubound import get_columns
+from nti.machine_learning.database.oubound import insert_obj
 
-from nti.data.problems.oubound import OUBoundEssayStats
-from nti.data.problems.oubound import build_essay_classifier
-from nti.data.problems.oubound import get_response_aid_correlation
-from nti.data.problems.oubound import get_interest_aid_correlation
+from nti.machine_learning.problems.oubound import OUBoundEssayStats
+from nti.machine_learning.problems.oubound import build_essay_classifier
+from nti.machine_learning.problems.oubound import get_response_aid_correlation
+from nti.machine_learning.problems.oubound import get_interest_aid_correlation
 
-from nti.data.database.oubound import OUBoundEssayDB
+from nti.machine_learning.database.oubound import OUBoundEssayDB
 
 # Available algorithm options
 ALGOS = [DBScan.__name__, KMeans.__name__, Entropic.__name__]

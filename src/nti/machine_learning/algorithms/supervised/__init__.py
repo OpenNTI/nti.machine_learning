@@ -2,9 +2,9 @@ from numpy import array
 
 from numpy.random import shuffle
 
-from nti.data import Model
-from nti.data import NTIDataFrame
-from nti.data import AbstractDataSet
+from nti.machine_learning import Model
+from nti.machine_learning import NTIDataFrame
+from nti.machine_learning import AbstractDataSet
 
 class SupervisedDataSet(AbstractDataSet):
     """

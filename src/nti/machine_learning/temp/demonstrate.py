@@ -1,17 +1,17 @@
 import click
 import logging
 
-from nti.data import FORMAT
+from nti.machine_learning import FORMAT
 
-from nti.data.algorithms import NeuralNetwork
-from nti.data.algorithms import KMeans
-from nti.data.algorithms import DBScan
-from nti.data.algorithms import Entropic
+from nti.machine_learning.algorithms import NeuralNetwork
+from nti.machine_learning.algorithms import KMeans
+from nti.machine_learning.algorithms import DBScan
+from nti.machine_learning.algorithms import Entropic
 
-from nti.data.fake import DataGenerator
-from nti.data.fake import Plotter
+from nti.machine_learning.temp.fake import DataGenerator
+from nti.machine_learning.temp.fake import Plotter
 
-from nti.data import NTIDataFrame
+from nti.machine_learning import NTIDataFrame
 
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 logging.getLogger(__name__)

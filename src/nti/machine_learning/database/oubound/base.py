@@ -7,10 +7,10 @@ from sqlalchemy import ForeignKeyConstraint
 from sqlalchemy.types import BigInteger
 from sqlalchemy.types import Float
 
-from nti.data import FORMAT
+from nti.machine_learning import FORMAT
 
-from nti.data.database import AbstractTable
-from nti.data.database import PersistentBase
+from nti.machine_learning.database import AbstractTable
+from nti.machine_learning.database import PersistentBase
 
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 logging.getLogger(__name__)

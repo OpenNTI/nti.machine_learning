@@ -1,11 +1,11 @@
-from nti.data.database.oubound.essay import Essay
-from nti.data.database.oubound.essay import Sentiments
+from nti.machine_learning.database.oubound.essay import Essay
+from nti.machine_learning.database.oubound.essay import Sentiments
 
-from nti.data.database.oubound.finance import Expense
-from nti.data.database.oubound.finance import Scholarship
-from nti.data.database.oubound.finance import Award
-from nti.data.database.oubound.finance import FamilyContrib
-from nti.data.database.oubound.finance import WorkContrib
+from nti.machine_learning.database.oubound.finance import Expense
+from nti.machine_learning.database.oubound.finance import Scholarship
+from nti.machine_learning.database.oubound.finance import Award
+from nti.machine_learning.database.oubound.finance import FamilyContrib
+from nti.machine_learning.database.oubound.finance import WorkContrib
 
 def _build_essay_from_str(self, line):
         args = dict(zip(Essay.KEYS, line[1:5]))

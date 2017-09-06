@@ -2,31 +2,31 @@ import logging
 
 from pandas import read_sql
 
-from nti.data import FORMAT
-from nti.data import NTIDataFrame
+from nti.machine_learning import FORMAT
+from nti.machine_learning import NTIDataFrame
 
-from nti.data.database import AbstractDatabase
+from nti.machine_learning.database import AbstractDatabase
 
-from nti.data.database.oubound.essay import Model
-from nti.data.database.oubound.essay import Essay
-from nti.data.database.oubound.essay import Sentiments
+from nti.machine_learning.database.oubound.essay import Model
+from nti.machine_learning.database.oubound.essay import Essay
+from nti.machine_learning.database.oubound.essay import Sentiments
 
-from nti.data.database.oubound.base import Student
+from nti.machine_learning.database.oubound.base import Student
 
-from nti.data.database.oubound.finance import Expense
-from nti.data.database.oubound.finance import Scholarship
-from nti.data.database.oubound.finance import Award
-from nti.data.database.oubound.finance import FamilyContrib
-from nti.data.database.oubound.finance import WorkContrib
+from nti.machine_learning.database.oubound.finance import Expense
+from nti.machine_learning.database.oubound.finance import Scholarship
+from nti.machine_learning.database.oubound.finance import Award
+from nti.machine_learning.database.oubound.finance import FamilyContrib
+from nti.machine_learning.database.oubound.finance import WorkContrib
 
-from nti.data.database.oubound.interests import Interests
+from nti.machine_learning.database.oubound.interests import Interests
 
-from nti.data.database.oubound._utils import _build_essay_from_str
-from nti.data.database.oubound._utils import _build_sentiment_from_str
-from nti.data.database.oubound._utils import _save_expenses_from_json
-from nti.data.database.oubound._utils import _save_scholarships_from_json
-from nti.data.database.oubound._utils import _save_awards_from_json
-from nti.data.database.oubound._utils import _save_contribs_from_json
+from nti.machine_learning.database.oubound._utils import _build_essay_from_str
+from nti.machine_learning.database.oubound._utils import _build_sentiment_from_str
+from nti.machine_learning.database.oubound._utils import _save_expenses_from_json
+from nti.machine_learning.database.oubound._utils import _save_scholarships_from_json
+from nti.machine_learning.database.oubound._utils import _save_awards_from_json
+from nti.machine_learning.database.oubound._utils import _save_contribs_from_json
 
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 logging.getLogger(__name__)
