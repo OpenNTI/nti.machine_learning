@@ -11,9 +11,13 @@ logger = __import__('logging').getLogger(__name__)
 
 from sklearn.svm import SVC
 
+from zope import interface
+
 from nti.machine_learning.algorithms.supervised import SupervisedModel
 
+from nti.machine_learning.supervised.interfaces import ISVM
 
+@interface.implementer(ISVM)
 class SupportVectorMachine(SupervisedModel):
     """
     Abstraction of the SciKit Learn Support Vector Machine.

@@ -9,6 +9,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+from zope import interface
+
 from nti.machine_learning.algorithms.unsupervised import AbstractClusterModel
 
 from nti.machine_learning.algorithms.utils import entropy
@@ -16,7 +18,14 @@ from nti.machine_learning.algorithms.utils import distance
 from nti.machine_learning.algorithms.utils import similarity
 from nti.machine_learning.algorithms.utils import mean_distance
 
+from nti.machine_learning.unsupervised.interfaces import IDBScan
+from nti.machine_learning.unsupervised.interfaces import IEntropic
 
+from nti.schema.fieldproperty import createDirectFieldProperties
+
+from nti.schema.schema import SchemaConfigured
+
+@interface.implementer(IDBScan)
 class DBScan(AbstractClusterModel):
     """
     Performs the DBScan density clustering algorithm.
@@ -24,6 +33,8 @@ class DBScan(AbstractClusterModel):
     Inputs are the point set, the minimum number of points for a cluster,
     and the epsilon value that designates the fine-ness of the clustering.
     """
+
+    createDirectFieldProperties(IDBScan)
 
     def __init__(self, data_frame, min_pts, eps):
         super(DBScan, self).__init__(data_frame)
@@ -85,7 +96,7 @@ class DBScan(AbstractClusterModel):
         self._data.get_cluster_centers()
         return self._data._data
 
-
+@interface.implementer(IEntropic)
 class Entropic(AbstractClusterModel):
     """
     Performs an entropy-based clustering.
@@ -96,6 +107,7 @@ class Entropic(AbstractClusterModel):
     Entropy is a measure of disorder, so we are trying
     to achieve minimum entropy.
     """
+    createDirectFieldProperties(IEntropic)
 
     def __init__(self, data_frame, beta):
         super(Entropic, self).__init__(data_frame)

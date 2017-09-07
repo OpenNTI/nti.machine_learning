@@ -5,5 +5,17 @@
 
     <include package="zope.component" file="meta.zcml" />
     <include package="zope.component" />
+    
+    <!-- Learning model factories -->
+    <utility factory=".supervised.neural_network.NeuralNetwork"
+    		 provides=".supervised.interface.INeuralNetwork"/>
+    <utility factory=".supervised.support_vector_machine.SupportVectorMachine"
+    		 provides=".supervised.interface.ISVM"/>
+    <utility factory=".unsupervised.density.DBScan"
+    		 provides=".unsupervised.interfaces.IDBScan"/>
+   	<utility factory=".unsupervised.density.Entorpic"
+   			 provides="unsupervised.interfaces.IEntropic"/>
+   	<utility factory=".unsupervised.geometric.KMeans"
+   			 provides=".unsupervised.interfaces.IKMeans"/>
 
 </configure>

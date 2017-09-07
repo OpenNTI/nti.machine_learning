@@ -13,20 +13,29 @@ from numpy import array
 
 from numpy.random import shuffle
 
+from zope import interface
+
 from nti.machine_learning import Model
 from nti.machine_learning import NTIDataFrame
 from nti.machine_learning import AbstractDataSet
 
+from nti.machine_learning.supervised.interfaces import ISupervisedModel
+from nti.machine_learning.supervised.interfaces import ISupervisedDataSet
 
-class SupervisedDataSet(AbstractDataSet):
+from nti.schema.fieldproperty import createDirectFieldProperties
+
+from nti.schema.schema import SchemaConfigured
+
+
+@interface.implementer(ISupervisedDataSet)
+class SupervisedDataSet(AbstractDataSet,
+                        SchemaConfigured):
     """
     Class managing a data set for use by
     a supervised learning model.
     """
-
-    _indices = []
-    _training_indices = []
-    _validation_indices = []
+    createDirectFieldProperties(ISupervisedDataSet)
+    
 
     def __init__(self, data_frame, prediction_column, training_ratio):
         self._training_ratio = training_ratio
@@ -71,13 +80,14 @@ class SupervisedDataSet(AbstractDataSet):
         """
         return [self._get_from_frame(i)[1] for i in self._validation_indices]
 
-
-class SupervisedModel(Model):
+@interface.implementer(ISupervisedModel)
+class SupervisedModel(Model,
+                      SchemaConfigured):
     """
     A supervised learning model
     """
-
-    success_rate = 0
+    createDirectFieldProperties(ISupervisedModel)
+    
 
     def __init__(self, data_frame, prediction_column, training_set_ratio=.7):
         if not isinstance(data_frame, NTIDataFrame):

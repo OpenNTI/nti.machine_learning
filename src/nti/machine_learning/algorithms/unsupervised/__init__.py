@@ -9,11 +9,21 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+from zope import interface
+
 from nti.machine_learning import Model
 from nti.machine_learning import AbstractDataSet
 
+from nti.machine_learning.unsupervised.interfaces import IUnsupervisedModel
+from nti.machine_learning.unsupervised.interfaces import IUnsupervisedDataSet
 
-class AbstractClusterModel(Model):
+from nti.schema.fieldproperty import createDirectFieldProperties
+
+from nti.schema.schema import SchemaConfigured
+
+@interface.implementer(IUnsupervisedModel)
+class AbstractClusterModel(Model,
+                           SchemaConfigured):
     """
     Serves as a base for a clustering model.
 
@@ -21,7 +31,7 @@ class AbstractClusterModel(Model):
     and marks all points as not yet belonging to any cluster.
     """
 
-    NON_MEMBER = -1
+    createDirectFieldProperties(IUnsupervisedModel)
 
     def __init__(self, data_frame):
         if len(data_frame.index.values) <= 1:
@@ -36,16 +46,20 @@ class AbstractClusterModel(Model):
         raise NotImplementedError('cluster method must be provided.')
 
 
+@interface.implementer(IUnsupervisedDataSet)
 class UnsupervisedDataSet(AbstractDataSet):
+    """
+    Impelmentation of an unsupervised data set. Manages the point
+    storage as well as cluster creation and changes
+    """
 
-    _CLUSTER = "cluster"
+    createDirectFieldProperties(IUnsupervisedDataSet)
 
     def __init__(self, data_frame):
         self._data = data_frame
         self._data[self._CLUSTER] = AbstractClusterModel.NON_MEMBER
         self._dimensions = len(self._data.columns) - 1
-        self._clusters = {}
-        self._size = len(self._data.index.values)
+        self.size = len(self._data.index.values)
         self._idx = 0
 
     def change_cluster(self, index, new_cluster):
@@ -54,6 +68,8 @@ class UnsupervisedDataSet(AbstractDataSet):
     def add_cluster(self):
         new_index = len(self._clusters)
         self._clusters[new_index] = None
+        # Return the new cluster, so an algorithm can
+        # keep track if it needs to.
         return new_index
 
     def _get_cluster(self, cluster):
@@ -75,9 +91,6 @@ class UnsupervisedDataSet(AbstractDataSet):
     def get_cluster_for_point(self, index):
         return self._data.iloc[index, -1]
 
-    def size(self):
-        return self._size
-
     def get_clusters(self):
         vals = self._data[self._CLUSTER].unique()
         results = []
@@ -90,7 +103,7 @@ class UnsupervisedDataSet(AbstractDataSet):
 
     def __next__(self):
         self._idx += 1
-        if self._idx == self._size:
+        if self._idx == self.size:
             self._idx = 0
             raise StopIteration
         return self.get_point(self._idx)

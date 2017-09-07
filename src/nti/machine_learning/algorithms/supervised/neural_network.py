@@ -11,9 +11,13 @@ logger = __import__('logging').getLogger(__name__)
 
 from sklearn.neural_network import MLPClassifier
 
+from zope import interface
+
 from nti.machine_learning.algorithms.supervised import SupervisedModel
 
+from nti.machine_learning.supervised.interfaces import INeuralNetwork
 
+@interface.implementer(INeuralNetwork)
 class NeuralNetwork(SupervisedModel):
     """
     Abstraction of a multi-layer perceptron classifier 

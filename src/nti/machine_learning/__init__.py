@@ -17,14 +17,23 @@ except ImportError:
 from pandas import Series
 from pandas import DataFrame
 
+from zope import interface
+
+from nti.machine_learning.interfaces import IModel
+from nti.machine_learning.interfaces import IDataSet
+from nti.machine_learning.interfaces import IDataFrame
+
 FORMAT = '%(asctime)-15s %(message)s'
 
-# For right now I'm not sure if we'll need to extend
-# these, but I'll leave them here just in case
-NTISeries = Series
-NTIDataFrame = DataFrame
+# I think we'll need to extend this later, but
+# for now it's good as is
+@interface.implementer(IDataFrame)
+class NTIDataFrame(DataFrame):
+    """
+    Provides an extension to a pandas data frame
+    """
 
-
+@interface.implementer(IModel)
 class Model():
     """
     An abstract model for a data task.
@@ -36,7 +45,7 @@ class Model():
         """
         return pickle.dumps(self)
 
-
+@interface.implementer(IDataSet)
 class AbstractDataSet():
     """
     User for the management of data frames
