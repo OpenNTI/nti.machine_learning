@@ -7,6 +7,8 @@ __docformat__ = "restructuredtext en"
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
+import unittest
+
 from zope.component.hooks import setHooks
 
 from nti.testing.layers import GCLayerMixin
@@ -39,3 +41,7 @@ class SharedConfiguringTestLayer(ZopeComponentLayer,
     @classmethod
     def testTearDown(cls):
         pass
+
+class MachineLearningLayerTest(unittest.Testcase):
+    
+    layer = SharedConfiguringTestLayer
