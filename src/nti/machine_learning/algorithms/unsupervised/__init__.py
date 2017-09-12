@@ -14,8 +14,8 @@ from zope import interface
 from nti.machine_learning import Model
 from nti.machine_learning import AbstractDataSet
 
-from nti.machine_learning.unsupervised.interfaces import IUnsupervisedModel
-from nti.machine_learning.unsupervised.interfaces import IUnsupervisedDataSet
+from nti.machine_learning.algorithms.unsupervised.interfaces import IUnsupervisedModel
+from nti.machine_learning.algorithms.unsupervised.interfaces import IUnsupervisedDataSet
 
 from nti.schema.fieldproperty import createDirectFieldProperties
 

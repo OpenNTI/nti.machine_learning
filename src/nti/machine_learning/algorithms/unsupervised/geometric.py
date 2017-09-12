@@ -17,7 +17,7 @@ from nti.machine_learning.algorithms.unsupervised import AbstractClusterModel
 
 from nti.machine_learning.algorithms.utils import distance
 
-from nti.machine_learning.unsupervised.interfaces import IKMeans
+from nti.machine_learning.algorithms.unsupervised.interfaces import IKMeans
 
 from nti.schema.fieldproperty import createDirectFieldProperties
 
@@ -69,7 +69,7 @@ class KMeans(AbstractClusterModel,
         """
         Performs KMeans clustering.
 
-        This algorithm will force the data set into 
+        This algorithm will force the data set into
         the given k clusters, no matter the distribution.
         """
         change = True

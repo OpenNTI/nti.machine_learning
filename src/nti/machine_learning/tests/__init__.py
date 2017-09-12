@@ -9,7 +9,11 @@ __docformat__ = "restructuredtext en"
 
 import unittest
 
+from random import randint
+
 from zope.component.hooks import setHooks
+
+from nti.machine_learning import NTIDataFrame
 
 from nti.testing.layers import GCLayerMixin
 from nti.testing.layers import ZopeComponentLayer
@@ -42,6 +46,16 @@ class SharedConfiguringTestLayer(ZopeComponentLayer,
     def testTearDown(cls):
         pass
 
-class MachineLearningLayerTest(unittest.Testcase):
-    
+class MachineLearningLayerTest(unittest.TestCase):
+
     layer = SharedConfiguringTestLayer
+
+    @classmethod
+    def setUp(self):
+        examples = []
+        for i in range(100):
+            x = randint(0,1)
+            y = randint(0,1)
+            xor = x ^ y
+            examples.append([x, y, xor])
+        self.example_frame = NTIDataFrame(examples, columns=['x', 'y', 'xor'])

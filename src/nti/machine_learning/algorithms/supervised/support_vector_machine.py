@@ -15,7 +15,7 @@ from zope import interface
 
 from nti.machine_learning.algorithms.supervised import SupervisedModel
 
-from nti.machine_learning.supervised.interfaces import ISVM
+from nti.machine_learning.algorithms.supervised.interfaces import ISVM
 
 @interface.implementer(ISVM)
 class SupportVectorMachine(SupervisedModel):
@@ -25,7 +25,7 @@ class SupportVectorMachine(SupervisedModel):
 
     def __init__(self, data_frame, prediction_column, training_size=.7, **kwargs):
         super(SupportVectorMachine, self).__init__(data_frame,
-                                                   prediction_column, 
+                                                   prediction_column,
                                                    training_set_ratio=training_size)
         self.svc = SVC(**kwargs)
 

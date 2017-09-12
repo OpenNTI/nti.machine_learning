@@ -18,8 +18,8 @@ from nti.machine_learning.algorithms.utils import distance
 from nti.machine_learning.algorithms.utils import similarity
 from nti.machine_learning.algorithms.utils import mean_distance
 
-from nti.machine_learning.unsupervised.interfaces import IDBScan
-from nti.machine_learning.unsupervised.interfaces import IEntropic
+from nti.machine_learning.algorithms.unsupervised.interfaces import IDBScan
+from nti.machine_learning.algorithms.unsupervised.interfaces import IEntropic
 
 from nti.schema.fieldproperty import createDirectFieldProperties
 
@@ -46,7 +46,7 @@ class DBScan(AbstractClusterModel):
     def _find_neighbors(self, point):
         """
         Find the density neighbors of the point. This is the
-        bottleneck of this algorithm: you have to visit all points most 
+        bottleneck of this algorithm: you have to visit all points most
         every time.
         """
         return [i for i in range(self._data.size())
@@ -101,7 +101,7 @@ class Entropic(AbstractClusterModel):
     """
     Performs an entropy-based clustering.
 
-    Input parameters are the list of points and a 
+    Input parameters are the list of points and a
     beta value signifying the coarseness of clustering.
 
     Entropy is a measure of disorder, so we are trying
@@ -120,7 +120,7 @@ class Entropic(AbstractClusterModel):
         """
         new_cluster = self._data.add_cluster()
         for p in temp_points or ():
-            value = similarity(mean_dist, 
+            value = similarity(mean_dist,
                                self._data.get_point(center),
                                self._data.get_point(p))
             if value >= self.beta:

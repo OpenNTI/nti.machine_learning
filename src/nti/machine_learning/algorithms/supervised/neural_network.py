@@ -15,18 +15,18 @@ from zope import interface
 
 from nti.machine_learning.algorithms.supervised import SupervisedModel
 
-from nti.machine_learning.supervised.interfaces import INeuralNetwork
+from nti.machine_learning.algorithms.supervised.interfaces import INeuralNetwork
 
 @interface.implementer(INeuralNetwork)
 class NeuralNetwork(SupervisedModel):
     """
-    Abstraction of a multi-layer perceptron classifier 
+    Abstraction of a multi-layer perceptron classifier
     from sci-kit learn
     """
 
     def __init__(self, data_frame, prediction_column, layers, training_size=.7, **kwargs):
         super(NeuralNetwork, self).__init__(data_frame,
-                                            prediction_column, 
+                                            prediction_column,
                                             training_set_ratio=training_size)
         self.mlp = MLPClassifier(hidden_layer_sizes=layers, **kwargs)
 
