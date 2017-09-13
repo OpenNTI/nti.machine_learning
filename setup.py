@@ -46,6 +46,7 @@ setup(
     install_requires=[
         'setuptools',
         'matplotlib',
+        'nti.property',
         'nti.schema',
         'numpy',
         'pandas',
