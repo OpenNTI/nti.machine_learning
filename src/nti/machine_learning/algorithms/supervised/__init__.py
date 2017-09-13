@@ -68,25 +68,25 @@ class SupervisedDataSet(AbstractDataSet, SchemaConfigured):
         """
         Get the inputs for the training set
         """
-        return [self._get_from_frame(i)[0] for i in self._training_indices]
+        return [self.get_from_frame(i)[0] for i in self._training_indices]
 
     def get_training_set_outputs(self):
         """
         Get the outputs for the training set
         """
-        return [self._get_from_frame(i)[1] for i in self._training_indices]
+        return [self.get_from_frame(i)[1] for i in self._training_indices]
 
     def get_validation_set_inputs(self):
         """
         Get the inputs for a validation set
         """
-        return [self._get_from_frame(i)[0] for i in self._validation_indices]
+        return [self.get_from_frame(i)[0] for i in self._validation_indices]
 
     def get_validation_set_outputs(self):
         """
         Get the outputs for the validation
         """
-        return [self._get_from_frame(i)[1] for i in self._validation_indices]
+        return [self.get_from_frame(i)[1] for i in self._validation_indices]
 
 
 @interface.implementer(ISupervisedModel)
