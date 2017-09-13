@@ -17,6 +17,7 @@ from nti.machine_learning.algorithms.unsupervised import AbstractClusterModel
 
 from nti.machine_learning.algorithms.unsupervised.interfaces import IDBScan
 
+
 @interface.implementer(IDBScan)
 class DBScan(AbstractClusterModel):
 
