@@ -11,24 +11,28 @@ logger = __import__('logging').getLogger(__name__)
 
 from sklearn.neural_network import MLPClassifier
 
+from zope import interface
+
 from nti.machine_learning.algorithms.supervised import SupervisedModel
 
+from nti.machine_learning.algorithms.supervised.interfaces import INeuralNetwork
 
+@interface.implementer(INeuralNetwork)
 class NeuralNetwork(SupervisedModel):
     """
-    Abstraction of a multi-layer perceptron classifier 
+    Abstraction of a multi-layer perceptron classifier
     from sci-kit learn
     """
 
     def __init__(self, data_frame, prediction_column, layers, training_size=.7, **kwargs):
         super(NeuralNetwork, self).__init__(data_frame,
-                                            prediction_column, 
+                                            prediction_column,
                                             training_set_ratio=training_size)
-        self.mlp = MLPClassifier(hidden_layer_sizes=layers, **kwargs)
+        self.clf = MLPClassifier(hidden_layer_sizes=layers, **kwargs)
 
     def classify(self, inputs):
-        return self.mlp.predict([inputs])
+        return self.clf.predict([inputs])
 
     def train(self):
-        self.mlp.fit(self._training_set_inputs, self._training_set_outputs)
-        self._run_validation()
+        self.clf.fit(self._training_set_inputs, self._training_set_outputs)
+        self.success_rate = self.clf.score(self._validation_set_inputs, self._validation_set_outputs)

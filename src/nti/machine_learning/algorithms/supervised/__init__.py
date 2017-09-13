@@ -13,20 +13,31 @@ from numpy import array
 
 from numpy.random import shuffle
 
+from zope import interface
+
 from nti.machine_learning import Model
 from nti.machine_learning import NTIDataFrame
 from nti.machine_learning import AbstractDataSet
 
+from nti.machine_learning.algorithms.supervised.interfaces import ISupervisedModel
+from nti.machine_learning.algorithms.supervised.interfaces import ISupervisedDataSet
+from nti.machine_learning.algorithms.supervised.interfaces import ISVM
+from nti.machine_learning.algorithms.supervised.interfaces import INeuralNetwork
 
-class SupervisedDataSet(AbstractDataSet):
+from nti.schema.fieldproperty import createDirectFieldProperties
+
+from nti.schema.schema import SchemaConfigured
+
+
+@interface.implementer(ISupervisedDataSet)
+class SupervisedDataSet(AbstractDataSet,
+                        SchemaConfigured):
     """
     Class managing a data set for use by
     a supervised learning model.
     """
+    createDirectFieldProperties(ISupervisedDataSet)
 
-    _indices = []
-    _training_indices = []
-    _validation_indices = []
 
     def __init__(self, data_frame, prediction_column, training_ratio):
         self._training_ratio = training_ratio
@@ -37,7 +48,7 @@ class SupervisedDataSet(AbstractDataSet):
             self._data = self._data.drop(prediction_column, axis=1)
         except IndexError:
             raise ValueError("Invalid prediction column.")
-        self._indices = data_frame.index.values
+        self._indices = list(data_frame.index.values)
         shuffle(self._indices)
         training_size = int(len(self._indices) * self._training_ratio)
         self._training_indices = [
@@ -71,38 +82,26 @@ class SupervisedDataSet(AbstractDataSet):
         """
         return [self._get_from_frame(i)[1] for i in self._validation_indices]
 
-
-class SupervisedModel(Model):
+@interface.implementer(ISupervisedModel)
+class SupervisedModel(Model,
+                      SchemaConfigured):
     """
     A supervised learning model
     """
+    createDirectFieldProperties(ISupervisedModel)
 
-    success_rate = 0
 
     def __init__(self, data_frame, prediction_column, training_set_ratio=.7):
         if not isinstance(data_frame, NTIDataFrame):
             raise TypeError("data_frame must be of type NTIDataFrame")
         if len(data_frame) <= 1:
             raise ValueError("Insufficient data set size")
-        self._data = SupervisedDataSet(data_frame, prediction_column, 
+        self._data = SupervisedDataSet(data_frame, prediction_column,
                                        training_ratio=training_set_ratio)
         self._training_set_inputs = self._data.get_training_set_inputs()
         self._training_set_outputs = self._data.get_training_set_outputs()
         self._validation_set_inputs = self._data.get_validation_set_inputs()
         self._validation_set_outputs = self._data.get_validation_set_outputs()
-
-    def _run_validation(self):
-        """
-        Run the validation set for the learning model,
-        this must be implemented by the train method
-        """
-        aggregate = 0
-        for i in range(len(self._validation_set_inputs)):
-            prediction = self.classify(self._validation_set_inputs[i])
-            correct = prediction == self._validation_set_outputs[i]
-            if correct:
-                aggregate += 1
-        self.success_rate = aggregate / float(len(self._validation_set_inputs))
 
     def classify(self, inputs):
         """
