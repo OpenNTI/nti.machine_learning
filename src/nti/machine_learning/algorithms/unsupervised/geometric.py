@@ -9,16 +9,16 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from sklearn.cluster import KMeans as sk_kmeans
+from sklearn.cluster import KMeans as SK_KMeans
 
 from zope import interface
 
 from nti.machine_learning.algorithms.unsupervised import AbstractClusterModel
 
-from nti.machine_learning.algorithms.utils import distance
-
 from nti.machine_learning.algorithms.unsupervised.interfaces import IKMeans
 
+
+@interface.implementer(IKMeans)
 class KMeans(AbstractClusterModel):
     """
     Performs KMeans clustering - super basic.
@@ -26,9 +26,10 @@ class KMeans(AbstractClusterModel):
     Parameters are the point set and number of clusters
     to find.
     """
+
     def __init__(self, data_frame, **kwargs):
         super(KMeans, self).__init__(data_frame)
-        self.cls = sk_kmeans(**kwargs)
+        self.cls = SK_KMeans(**kwargs)
 
     def cluster(self):
         """
@@ -38,3 +39,7 @@ class KMeans(AbstractClusterModel):
         the given k clusters, no matter the distribution.
         """
         return self.cls.fit_predict(self._data.to_matrix())
+
+    @property
+    def k(self):
+        return self.cls.n_clusters

@@ -27,14 +27,17 @@ FORMAT = '%(asctime)-15s %(message)s'
 
 # I think we'll need to extend this later, but
 # for now it's good as is
+
+
 @interface.implementer(IDataFrame)
 class NTIDataFrame(DataFrame):
     """
     Provides an extension to a pandas data frame
     """
 
+
 @interface.implementer(IModel)
-class Model():
+class Model(object):
     """
     An abstract model for a data task.
     """
@@ -45,14 +48,15 @@ class Model():
         """
         return pickle.dumps(self)
 
+
 @interface.implementer(IDataSet)
-class AbstractDataSet():
+class AbstractDataSet(object):
     """
     User for the management of data frames
     while algorithms execute
     """
 
-    def _get_from_frame(self, index):
+    def get_from_frame(self, index):
         """
         Get a row from the core data frame at index "index"
         """
@@ -69,3 +73,4 @@ class AbstractDataSet():
                 msg = "Index %s could not be found in data set."
                 raise ValueError(msg % (index,))
         return (row, answer)
+    _get_from_frame = get_from_frame  # BWC

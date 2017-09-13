@@ -9,23 +9,17 @@ __docformat__ = "restructuredtext en"
 
 from hamcrest import assert_that
 
-from nti.machine_learning.algorithms import SupportVectorMachine
-from nti.machine_learning.algorithms import KMeans
-from nti.machine_learning.algorithms import DBScan
+from nti.testing.matchers import validly_provides
 
-from nti.machine_learning.tests import SupervisedLearningLayerTest
+from nti.machine_learning.algorithms.unsupervised.density import DBScan
+
+from nti.machine_learning.algorithms.unsupervised.geometric import KMeans
+
+from nti.machine_learning.algorithms.unsupervised.interfaces import IDBScan
+from nti.machine_learning.algorithms.unsupervised.interfaces import IKMeans
+
 from nti.machine_learning.tests import UnsupervisedLearningLayerTest
 
-class TestSupervisedModels(SupervisedLearningLayerTest):
-    """
-    Test known available supervised models
-    """
-
-    def test_svm(self):
-        svm = SupportVectorMachine(self.example_frame,
-                                   self.example_prediction_columns)
-        svm.train()
-        assert_that(svm.success_rate, 1.0)
 
 class TestUnsupervisedModels(UnsupervisedLearningLayerTest):
     """
@@ -34,12 +28,14 @@ class TestUnsupervisedModels(UnsupervisedLearningLayerTest):
 
     def test_kmeans(self):
         kmeans = KMeans(self.example_frame, n_clusters=2)
+        assert_that(kmeans, validly_provides(IKMeans))
         clusters = kmeans.cluster()
         clusters = set(clusters)
         assert_that(len(clusters), 2)
 
     def test_dbscan(self):
         dbscan = DBScan(self.example_frame, eps=15, min_samples=1)
+        assert_that(dbscan, validly_provides(IDBScan))
         clusters = dbscan.cluster()
         clusters = set(clusters)
         assert_that(len(clusters), 2)

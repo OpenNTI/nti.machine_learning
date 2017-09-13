@@ -13,8 +13,6 @@ from random import randint
 
 from zope.component.hooks import setHooks
 
-from nti.machine_learning import NTIDataFrame
-
 from nti.testing.layers import GCLayerMixin
 from nti.testing.layers import ZopeComponentLayer
 from nti.testing.layers import ConfiguringLayerMixin
@@ -46,6 +44,10 @@ class SharedConfiguringTestLayer(ZopeComponentLayer,
     def testTearDown(cls):
         pass
 
+
+from nti.machine_learning import NTIDataFrame
+
+
 class SupervisedLearningLayerTest(unittest.TestCase):
 
     layer = SharedConfiguringTestLayer
@@ -53,13 +55,14 @@ class SupervisedLearningLayerTest(unittest.TestCase):
     @classmethod
     def setUp(self):
         examples = []
-        for i in range(100):
-            x = randint(0,1)
-            y = randint(0,1)
+        for _ in range(100):
+            x = randint(0, 1)
+            y = randint(0, 1)
             xor = x ^ y
             examples.append([x, y, xor])
         self.example_frame = NTIDataFrame(examples, columns=['x', 'y', 'xor'])
         self.example_prediction_columns = ['xor']
+
 
 class UnsupervisedLearningLayerTest(unittest.TestCase):
 
@@ -68,14 +71,14 @@ class UnsupervisedLearningLayerTest(unittest.TestCase):
     @classmethod
     def setUp(self):
         points = []
-        for i in range(500):
-            x = randint(0,30)
-            y = randint(0,100)
-            z = randint(0,100)
+        for _ in range(500):
+            x = randint(0, 30)
+            y = randint(0, 100)
+            z = randint(0, 100)
             points.append([x, y, z])
-        for i in range(500):
-            x = randint(70,100)
-            y = randint(0,100)
-            z = randint(0,100)
+        for _ in range(500):
+            x = randint(70, 100)
+            y = randint(0, 100)
+            z = randint(0, 100)
             points.append([x, y, z])
         self.example_frame = NTIDataFrame(points, columns=['x', 'y', 'z'])

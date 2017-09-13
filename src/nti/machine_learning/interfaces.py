@@ -11,9 +11,8 @@ logger = __import__('logging').getLogger(__name__)
 
 from zope import interface
 
-from zope.schema import Object
-from zope.schema import Dict
-from zope.schema import List
+from nti.schema.field import Object
+
 
 class IModel(interface.Interface):
     """
@@ -28,10 +27,12 @@ class IModel(interface.Interface):
         Defines the persistent pickle for this learning model.
         """
 
+
 class IDataFrame(interface.Interface):
     """
     An underlying frame to hold and manipulate data.
     """
+
 
 class IDataSet(interface.Interface):
     """
@@ -39,12 +40,12 @@ class IDataSet(interface.Interface):
     for a learning model constructed with an NTIDataFrame.
     """
 
-    _data = Object(IDataFrame,
-                   title=u"Data Frame",
-                   description=u"The main data frame for the data set",
-                   default=None)
+    data = Object(IDataFrame,
+                  title=u"Data Frame",
+                  description=u"The main data frame for the data set",
+                  default=None)
 
-    def _get_from_frame(index):
+    def get_from_frame(index):
         """
         Pulls a particular row from the data frame
         """

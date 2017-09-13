@@ -19,29 +19,35 @@ from nti.machine_learning import Model
 from nti.machine_learning import NTIDataFrame
 from nti.machine_learning import AbstractDataSet
 
-from nti.machine_learning.algorithms.supervised.interfaces import ISupervisedModel
-from nti.machine_learning.algorithms.supervised.interfaces import ISupervisedDataSet
 from nti.machine_learning.algorithms.supervised.interfaces import ISVM
 from nti.machine_learning.algorithms.supervised.interfaces import INeuralNetwork
+from nti.machine_learning.algorithms.supervised.interfaces import ISupervisedModel
+from nti.machine_learning.algorithms.supervised.interfaces import ISupervisedDataSet
+
+from nti.property.property import alias
 
 from nti.schema.fieldproperty import createDirectFieldProperties
 
 from nti.schema.schema import SchemaConfigured
 
+DEFAULT_TRAINING_SET_RATIO = 0.7
+
 
 @interface.implementer(ISupervisedDataSet)
-class SupervisedDataSet(AbstractDataSet,
-                        SchemaConfigured):
+class SupervisedDataSet(AbstractDataSet, SchemaConfigured):
     """
     Class managing a data set for use by
     a supervised learning model.
     """
     createDirectFieldProperties(ISupervisedDataSet)
 
+    data = alias('_data')
+    indices = alias('_indices')
+    training_ratio = alias('_training_ratio')
 
     def __init__(self, data_frame, prediction_column, training_ratio):
-        self._training_ratio = training_ratio
         self._data = data_frame
+        self._training_ratio = training_ratio
         self._prediction_column = prediction_column
         try:
             self._prediction_data = self._data[prediction_column]
@@ -62,36 +68,41 @@ class SupervisedDataSet(AbstractDataSet,
         """
         Get the inputs for the training set
         """
-        return [self._get_from_frame(i)[0] for i in self._training_indices]
+        return [self.get_from_frame(i)[0] for i in self._training_indices]
 
     def get_training_set_outputs(self):
         """
         Get the outputs for the training set
         """
-        return [self._get_from_frame(i)[1] for i in self._training_indices]
+        return [self.get_from_frame(i)[1] for i in self._training_indices]
 
     def get_validation_set_inputs(self):
         """
         Get the inputs for a validation set
         """
-        return [self._get_from_frame(i)[0] for i in self._validation_indices]
+        return [self.get_from_frame(i)[0] for i in self._validation_indices]
 
     def get_validation_set_outputs(self):
         """
         Get the outputs for the validation
         """
-        return [self._get_from_frame(i)[1] for i in self._validation_indices]
+        return [self.get_from_frame(i)[1] for i in self._validation_indices]
+
 
 @interface.implementer(ISupervisedModel)
-class SupervisedModel(Model,
-                      SchemaConfigured):
+class SupervisedModel(Model, SchemaConfigured):
     """
     A supervised learning model
     """
     createDirectFieldProperties(ISupervisedModel)
 
+    data = alias('_data')
+    training_set_inputs = alias('_training_set_inputs')
+    training_set_outputs = alias('_training_set_outputs')
+    validation_set_inputs = alias('_validation_set_inputs')
+    validation_set_outputs = alias('_validation_set_outputs')
 
-    def __init__(self, data_frame, prediction_column, training_set_ratio=.7):
+    def __init__(self, data_frame, prediction_column, training_set_ratio=DEFAULT_TRAINING_SET_RATIO):
         if not isinstance(data_frame, NTIDataFrame):
             raise TypeError("data_frame must be of type NTIDataFrame")
         if len(data_frame) <= 1:

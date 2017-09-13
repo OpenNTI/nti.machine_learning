@@ -46,12 +46,16 @@ setup(
     install_requires=[
         'setuptools',
         'matplotlib',
+        'nti.property',
+        'nti.schema',
         'numpy',
         'pandas',
         'scikit-learn',
         'six',
         'statsmodels',
         'zope.component',
+        'zope.interface',
+        'zope.schema',
     ],
     extras_require={
         'test': TESTS_REQUIRE,

@@ -15,16 +15,19 @@ from zope import interface
 
 from nti.machine_learning.algorithms.supervised import SupervisedModel
 
+from nti.machine_learning.algorithms.supervised.interfaces import DEFAULT_TRAINING_SIZE
+
 from nti.machine_learning.algorithms.supervised.interfaces import INeuralNetwork
+
 
 @interface.implementer(INeuralNetwork)
 class NeuralNetwork(SupervisedModel):
     """
-    Abstraction of a multi-layer perceptron classifier
-    from sci-kit learn
+    Abstraction of a multi-layer perceptron classifier from sci-kit learn
     """
 
-    def __init__(self, data_frame, prediction_column, layers, training_size=.7, **kwargs):
+    def __init__(self, data_frame, prediction_column, layers,
+                 training_size=DEFAULT_TRAINING_SIZE, **kwargs):
         super(NeuralNetwork, self).__init__(data_frame,
                                             prediction_column,
                                             training_set_ratio=training_size)
@@ -35,4 +38,5 @@ class NeuralNetwork(SupervisedModel):
 
     def train(self):
         self.clf.fit(self._training_set_inputs, self._training_set_outputs)
-        self.success_rate = self.clf.score(self._validation_set_inputs, self._validation_set_outputs)
+        self.success_rate = self.clf.score(self._validation_set_inputs,
+                                           self._validation_set_outputs)

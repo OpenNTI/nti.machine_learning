@@ -17,21 +17,25 @@ from nti.machine_learning import AbstractDataSet
 from nti.machine_learning.algorithms.unsupervised.interfaces import IUnsupervisedModel
 from nti.machine_learning.algorithms.unsupervised.interfaces import IUnsupervisedDataSet
 
+from nti.property.property import alias
+
 from nti.schema.fieldproperty import createDirectFieldProperties
 
 from nti.schema.schema import SchemaConfigured
 
+
 @interface.implementer(IUnsupervisedModel)
-class AbstractClusterModel(Model,
-                           SchemaConfigured):
+class AbstractClusterModel(Model, SchemaConfigured):
     """
     Serves as a base for a clustering model.
 
     Takes a set of points, determines the dimensions it is clustering,
     and marks all points as not yet belonging to any cluster.
     """
-
     createDirectFieldProperties(IUnsupervisedModel)
+
+    data = alias('_data')
+    dimensions = alias('_dimensions')
 
     def __init__(self, data_frame):
         if len(data_frame.index.values) <= 1:
@@ -52,8 +56,13 @@ class UnsupervisedDataSet(AbstractDataSet):
     Impelmentation of an unsupervised data set. Manages the point
     storage as well as cluster creation and changes
     """
-
     createDirectFieldProperties(IUnsupervisedDataSet)
+
+    CLUSTER = alias('_CLUSTER')
+
+    data = alias('_data')
+    clusters = alias('_clusters')
+    dimensions = alias('_dimensions')
 
     def __init__(self, data_frame, manual=False):
         self._data = data_frame
@@ -72,16 +81,16 @@ class UnsupervisedDataSet(AbstractDataSet):
         # keep track if it needs to.
         return new_index
 
-    def _get_cluster(self, cluster):
+    def get_cluster(self, cluster):
         return self._data.loc[self._data[self._CLUSTER] == cluster].as_matrix()
 
     def get_cluster_centers(self):
         for c in self._clusters.keys():
-            points = self._get_cluster(c)
+            points = self.get_cluster(c)
             if points is None:
                 self._clusters[c] = [0 for i in range(self._dimensions)]
             self._clusters[c] = [
-                sum([p[i] for p in points]) / len(points) for i in range(self._dimensions)
+                sum(p[i] for p in points) / len(points) for i in range(self._dimensions)
             ]
         return self._clusters
 
@@ -94,7 +103,7 @@ class UnsupervisedDataSet(AbstractDataSet):
     def get_clusters(self):
         vals = self._data[self._CLUSTER].unique()
         results = []
-        for c in vals:
+        for c in vals or ():
             results.append(self._data[self._data[self._CLUSTER] == c])
         return results
 
