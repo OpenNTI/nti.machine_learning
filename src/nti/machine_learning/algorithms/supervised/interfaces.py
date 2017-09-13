@@ -15,6 +15,8 @@ from nti.machine_learning.interfaces import IDataSet
 from nti.schema.field import Number
 from nti.schema.field import ListOrTuple
 
+DEFAULT_TRAINING_SIZE = 0.7
+
 
 class ISupervisedModel(IModel):
     """

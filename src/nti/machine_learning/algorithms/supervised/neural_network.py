@@ -15,9 +15,9 @@ from zope import interface
 
 from nti.machine_learning.algorithms.supervised import SupervisedModel
 
-from nti.machine_learning.algorithms.supervised.interfaces import INeuralNetwork
+from nti.machine_learning.algorithms.supervised.interfaces import DEFAULT_TRAINING_SIZE
 
-DEFAULT_TRAINING_SIZE = 0.7
+from nti.machine_learning.algorithms.supervised.interfaces import INeuralNetwork
 
 
 @interface.implementer(INeuralNetwork)
