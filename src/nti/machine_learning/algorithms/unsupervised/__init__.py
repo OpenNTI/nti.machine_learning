@@ -58,6 +58,8 @@ class UnsupervisedDataSet(AbstractDataSet):
     """
     createDirectFieldProperties(IUnsupervisedDataSet)
 
+    CLUSTER = alias('_CLUSTER')
+
     data = alias('_data')
     clusters = alias('_clusters')
     dimensions = alias('_dimensions')
@@ -79,12 +81,12 @@ class UnsupervisedDataSet(AbstractDataSet):
         # keep track if it needs to.
         return new_index
 
-    def _get_cluster(self, cluster):
+    def get_cluster(self, cluster):
         return self._data.loc[self._data[self._CLUSTER] == cluster].as_matrix()
 
     def get_cluster_centers(self):
         for c in self._clusters.keys():
-            points = self._get_cluster(c)
+            points = self.get_cluster(c)
             if points is None:
                 self._clusters[c] = [0 for i in range(self._dimensions)]
             self._clusters[c] = [

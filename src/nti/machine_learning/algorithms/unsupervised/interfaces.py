@@ -9,15 +9,14 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from zope import interface
-
-from zope.schema import Int
-from zope.schema import TextLine
-from zope.schema import Dict
-from zope.schema import Float
-
 from nti.machine_learning.interfaces import IModel
 from nti.machine_learning.interfaces import IDataSet
+
+from nti.schema.field import Int
+from nti.schema.field import Dict
+from nti.schema.field import Number
+from nti.schema.field import TextLine
+
 
 class IUnsupervisedModel(IModel):
     """
@@ -35,23 +34,24 @@ class IUnsupervisedModel(IModel):
         column dictating the cluster they belong to.
         """
 
+
 class IUnsupervisedDataSet(IDataSet):
     """
     Outlines the data and structure for an IUnsupervisedModel
     """
 
-    _CLUSTER = TextLine(title=u"Cluster",
-                        description=u"The cluster column in an unsupervised data set",
-                        default=u"cluster",
-                        readonly=True)
+    CLUSTER = TextLine(title=u"Cluster",
+                       description=u"The cluster column in an unsupervised data set",
+                       default=u"cluster",
+                       readonly=True)
 
-    _dimensions = Int(title=u"Dimensions",
-                      description=u"The dimensionality of the data within the data set",
-                      default=0)
+    dimensions = Int(title=u"Dimensions",
+                     description=u"The dimensionality of the data within the data set",
+                     default=0)
 
-    _clusters = Dict(title=u"Cluster List",
-                     description=u"The list of clusters in the data set",
-                     default={})
+    clusters = Dict(title=u"Cluster List",
+                    description=u"The list of clusters in the data set",
+                    default={})
 
     size = Int(title=u"Size",
                description=u"The size of the data set",
@@ -87,30 +87,36 @@ class IUnsupervisedDataSet(IDataSet):
         Gets the cluster sets for a point
         """
 
+
 class IKMeans(IUnsupervisedModel):
     """
     Represents a KMeans clustering model.
     """
-    _k = Int(title=u"K",
-             description=u"The number of points to find",
-             default=2)
+
+    k = Int(title=u"K",
+            description=u"The number of points to find",
+            default=2)
+
 
 class IDBScan(IUnsupervisedModel):
     """
     Represents a DBScan clustering model
     """
+
     min_pts = Int(title=u"Minimum Points",
                   description=u"The minimum number of points to define a cluster",
                   default=50)
 
-    eps = Float(title=u"Epsilon",
-                description=u"The epsilon tolerance for density",
-                default=0.1)
+    eps = Number(title=u"Epsilon",
+                 description=u"The epsilon tolerance for density",
+                 default=0.1)
+
 
 class IEntropic(IUnsupervisedModel):
     """
     Represents an entropic clustering model
     """
-    beta = Float(title=u"Beta",
-                 description=u"The beta tolerance for similarity in points",
-                 default=0.5)
+
+    beta = Number(title=u"Beta",
+                  description=u"The beta tolerance for similarity in points",
+                  default=0.5)

@@ -11,13 +11,8 @@ logger = __import__('logging').getLogger(__name__)
 
 from sklearn.cluster import KMeans as sk_kmeans
 
-from zope import interface
-
 from nti.machine_learning.algorithms.unsupervised import AbstractClusterModel
 
-from nti.machine_learning.algorithms.utils import distance
-
-from nti.machine_learning.algorithms.unsupervised.interfaces import IKMeans
 
 class KMeans(AbstractClusterModel):
     """
@@ -26,6 +21,7 @@ class KMeans(AbstractClusterModel):
     Parameters are the point set and number of clusters
     to find.
     """
+
     def __init__(self, data_frame, **kwargs):
         super(KMeans, self).__init__(data_frame)
         self.cls = sk_kmeans(**kwargs)
