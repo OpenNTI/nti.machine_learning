@@ -73,3 +73,4 @@ class AbstractDataSet(object):
                 msg = "Index %s could not be found in data set."
                 raise ValueError(msg % (index,))
         return (row, answer)
+    _get_from_frame = get_from_frame  # BWC
