@@ -55,12 +55,12 @@ class UnsupervisedDataSet(AbstractDataSet):
 
     createDirectFieldProperties(IUnsupervisedDataSet)
 
-    def __init__(self, data_frame):
+    def __init__(self, data_frame, manual=False):
         self._data = data_frame
-        self._data[self._CLUSTER] = AbstractClusterModel.NON_MEMBER
+        if manual:
+            self._data[self._CLUSTER] = AbstractClusterModel.NON_MEMBER
         self._dimensions = len(self._data.columns) - 1
         self.size = len(self._data.index.values)
-        self._idx = 0
 
     def change_cluster(self, index, new_cluster):
         self._data.set_value(index, self._CLUSTER, new_cluster)
@@ -98,12 +98,5 @@ class UnsupervisedDataSet(AbstractDataSet):
             results.append(self._data[self._data[self._CLUSTER] == c])
         return results
 
-    def __iter__(self):
-        return iter(self._data.index.values)
-
-    def __next__(self):
-        self._idx += 1
-        if self._idx == self.size:
-            self._idx = 0
-            raise StopIteration
-        return self.get_point(self._idx)
+    def to_matrix(self):
+        return self._data.as_matrix()

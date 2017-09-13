@@ -10,7 +10,6 @@ __docformat__ = "restructuredtext en"
 logger = __import__('logging').getLogger(__name__)
 
 from nti.machine_learning.algorithms.unsupervised.density import DBScan
-from nti.machine_learning.algorithms.unsupervised.density import Entropic
 
 from nti.machine_learning.algorithms.unsupervised.geometric import KMeans
 

@@ -48,7 +48,7 @@ class SupervisedDataSet(AbstractDataSet,
             self._data = self._data.drop(prediction_column, axis=1)
         except IndexError:
             raise ValueError("Invalid prediction column.")
-        self._indices = data_frame.index.values
+        self._indices = list(data_frame.index.values)
         shuffle(self._indices)
         training_size = int(len(self._indices) * self._training_ratio)
         self._training_indices = [
@@ -102,19 +102,6 @@ class SupervisedModel(Model,
         self._training_set_outputs = self._data.get_training_set_outputs()
         self._validation_set_inputs = self._data.get_validation_set_inputs()
         self._validation_set_outputs = self._data.get_validation_set_outputs()
-
-    def _run_validation(self):
-        """
-        Run the validation set for the learning model,
-        this must be implemented by the train method
-        """
-        aggregate = 0
-        for i in range(len(self._validation_set_inputs)):
-            prediction = self.classify(self._validation_set_inputs[i])
-            correct = prediction == self._validation_set_outputs[i]
-            if correct:
-                aggregate += 1
-        self.success_rate = aggregate / float(len(self._validation_set_inputs))
 
     def classify(self, inputs):
         """

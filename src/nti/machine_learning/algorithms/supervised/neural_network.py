@@ -28,11 +28,11 @@ class NeuralNetwork(SupervisedModel):
         super(NeuralNetwork, self).__init__(data_frame,
                                             prediction_column,
                                             training_set_ratio=training_size)
-        self.mlp = MLPClassifier(hidden_layer_sizes=layers, **kwargs)
+        self.clf = MLPClassifier(hidden_layer_sizes=layers, **kwargs)
 
     def classify(self, inputs):
-        return self.mlp.predict([inputs])
+        return self.clf.predict([inputs])
 
     def train(self):
-        self.mlp.fit(self._training_set_inputs, self._training_set_outputs)
-        self._run_validation()
+        self.clf.fit(self._training_set_inputs, self._training_set_outputs)
+        self.success_rate = self.clf.score(self._validation_set_inputs, self._validation_set_outputs)

@@ -27,12 +27,12 @@ class SupportVectorMachine(SupervisedModel):
         super(SupportVectorMachine, self).__init__(data_frame,
                                                    prediction_column,
                                                    training_set_ratio=training_size)
-        self.svc = SVC(**kwargs)
+        self.clf = SVC(**kwargs)
 
     def classify(self, inputs):
-        pred_ans = self.svc.predict([inputs])
+        pred_ans = self.clf.predict([inputs])
         return pred_ans
 
     def train(self):
-        self.svc.fit(self._training_set_inputs, self._training_set_outputs)
-        self._run_validation()
+        self.clf.fit(self._training_set_inputs, self._training_set_outputs)
+        self.success_rate = self.clf.score(self._validation_set_inputs, self._validation_set_outputs)
