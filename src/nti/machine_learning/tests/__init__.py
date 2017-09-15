@@ -82,3 +82,18 @@ class UnsupervisedLearningLayerTest(unittest.TestCase):
             z = randint(0, 100)
             points.append([x, y, z])
         self.example_frame = NTIDataFrame(points, columns=['x', 'y', 'z'])
+
+
+from sklearn.datasets import load_iris
+
+class ModelEvalutionLayerTest(unittest.TestCase):
+    layer = SharedConfiguringTestLayer
+
+    @classmethod
+    def setUp(self):
+        iris = load_iris()
+        self.feature_data = iris.data
+        self.target = iris.target
+        self.feature_names = iris.feature_names
+
+
