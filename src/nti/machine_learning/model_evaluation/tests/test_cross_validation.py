@@ -8,6 +8,7 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import is_
+from hamcrest import greater_than
 from hamcrest import assert_that
 
 from sklearn.neighbors import KNeighborsClassifier
@@ -39,3 +40,6 @@ class TestKFoldCrossValidation(ModelEvalutionLayerTest):
 
     	assert_that(len(knn_scores), is_(10))
     	assert_that(len(logreg_scores), is_(10))
+    	assert_that(knn_scores.mean(), greater_than(logreg_scores.mean()))
+
+
