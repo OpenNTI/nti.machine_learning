@@ -15,8 +15,6 @@ from nti.machine_learning.interfaces import IDataSet
 from nti.schema.field import Number
 from nti.schema.field import ListOrTuple
 
-DEFAULT_TRAINING_SIZE = 0.7
-
 
 class ISupervisedModel(IModel):
     """
@@ -41,40 +39,26 @@ class ISupervisedDataSet(IDataSet):
     """
     Outlines the necessary components to structure
     a data set for use by a learning model. That is,
-    keeping index lists for each use within the model (training
-    and validation).
+    manage the structure of the data for training and
+    validation
     """
 
-    indices = ListOrTuple(title=u"Indices",
-                          description=u"The main list of indices within the underlying data frame",
-                          required=False)
-
-    training_indices = ListOrTuple(title=u"Training Indices",
-                                   description=u"The list of indices of the data frame to be used for training",
-                                   required=False)
-
-    validation_indices = ListOrTuple(title=u"Validation Indices",
-                                     description=u"The list of indices of the data frame to be used for validation",
-                                     required=False)
-
-    def get_training_set_inputs():
+    def total_size():
         """
-        Fetches a list of inputs for training
+        Return: The total size of the data set
         """
 
-    def get_training_set_outputs():
+    def get_frame_no_predictor():
         """
-        Fetches a list of the expected outputs for training
-        """
-
-    def get_validation_set_inputs():
-        """
-        Fetches a list of the inputs for validation
+        Return: A subset of the original data frame
+        that contains only the features of the data set
         """
 
-    def get_validation_set_outputs():
+    def get_predictors():
         """
-        Fetches a list of the expected outputs for validation
+        Return: A subset of the original data frame
+        that contains the predictors of the data set
+        in a shape compliant to KFoldCrossValidation
         """
 
 

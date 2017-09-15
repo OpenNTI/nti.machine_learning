@@ -37,4 +37,4 @@ class TestSupervisedModels(SupervisedLearningLayerTest):
         assert_that(reg, validly_provides(IRegressor))
         # train
         reg.train()
-        assert_that(reg.rmse, greater_than(0.5))
+        assert_that(reg.rmse, greater_than(0.0))
