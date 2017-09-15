@@ -40,7 +40,7 @@ class ISupervisedModel(IModel):
 class ISupervisedDataSet(IDataSet):
     """
     Outlines the necessary components to structure
-    a data set for use by a learning model. That is, 
+    a data set for use by a learning model. That is,
     keeping index lists for each use within the model (training
     and validation).
     """
@@ -88,4 +88,9 @@ class INeuralNetwork(ISupervisedModel):
 class ISVM(ISupervisedModel):
     """
     Outlines a Support Vector Machine learning model.
+    """
+
+class IRegressor(ISupervisedModel):
+    """
+    Outlines a regression model
     """

@@ -15,4 +15,6 @@ from nti.machine_learning.algorithms.unsupervised.geometric import KMeans
 
 from nti.machine_learning.algorithms.supervised.neural_network import NeuralNetwork
 
+from nti.machine_learning.algorithms.supervised.regression import Regressor
+
 from nti.machine_learning.algorithms.supervised.support_vector_machine import SupportVectorMachine
