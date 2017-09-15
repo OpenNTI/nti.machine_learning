@@ -12,8 +12,10 @@ from hamcrest import assert_that
 from nti.testing.matchers import validly_provides
 
 from nti.machine_learning.algorithms.supervised.interfaces import ISVM
+from nti.machine_learning.algorithms.supervised.interfaces import IRegressor
 
-from nti.machine_learning.algorithms.supervised.support_vector_machine import SupportVectorMachine
+from nti.machine_learning.algorithms import Regressor
+from nti.machine_learning.algorithms import SupportVectorMachine
 
 from nti.machine_learning.tests import SupervisedLearningLayerTest
 
@@ -27,3 +29,11 @@ class TestSupervisedModels(SupervisedLearningLayerTest):
         # train
         svm.train()
         assert_that(svm.success_rate, 1.0)
+
+    def test_regression(self):
+        reg = Regressor(self.example_frame,
+                        self.example_prediction_columns)
+        assert_that(reg, validly_provides(IRegressor))
+        # train
+        reg.train()
+        print(reg.rmse)

@@ -44,6 +44,7 @@ class SupervisedDataSet(AbstractDataSet, SchemaConfigured):
     data = alias('_data')
     indices = alias('_indices')
     training_ratio = alias('_training_ratio')
+    prediction_column = alias('_prediction_column')
 
     def __init__(self, data_frame, prediction_column, training_ratio):
         self._data = data_frame
@@ -87,6 +88,25 @@ class SupervisedDataSet(AbstractDataSet, SchemaConfigured):
         Get the outputs for the validation
         """
         return [self.get_from_frame(i)[1] for i in self._validation_indices]
+
+    def total_size(self):
+        """
+        Get the total size of the data set
+        """
+        return len(self._data.index)
+
+    def get_frame_no_predictor(self):
+        """
+        Gets a matrix of input values without the predictor
+        """
+        without_pred = self._data.drop(self._prediction_column)
+        return without_pred.as_matrix()
+
+    def get_predictors(self):
+        """
+        Gets a matrix of only the predictors
+        """
+        return self._data[self.prediction_column].as_matrix()
 
 
 @interface.implementer(ISupervisedModel)
