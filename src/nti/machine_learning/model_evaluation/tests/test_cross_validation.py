@@ -12,6 +12,8 @@ from hamcrest import assert_that
 
 from sklearn.neighbors import KNeighborsClassifier
 
+from sklearn.linear_model import LogisticRegression
+
 from nti.testing.matchers import validly_provides
 
 from nti.machine_learning.tests import ModelEvalutionLayerTest
@@ -24,4 +26,16 @@ class TestKFoldCrossValidation(ModelEvalutionLayerTest):
     	knn = KNeighborsClassifier(n_neighbors=5)
     	ten_cv = KFoldCrossValidation(knn, self.feature_data, self.target, 10,'accuracy')
     	scores = ten_cv.compute_scores()
-    	assert_that(scores[0], 1)
+    	assert_that(len(scores), is_(10))
+
+    def test_10fold_cross_validation_model_selection_accuracy(self):
+    	knn = KNeighborsClassifier(n_neighbors=5)
+    	ten_cv_knn = KFoldCrossValidation(knn, self.feature_data, self.target, 10,'accuracy')
+    	knn_scores = ten_cv_knn.compute_scores()
+
+    	logreg = LogisticRegression()
+    	ten_cv_log_reg = KFoldCrossValidation(logreg, self.feature_data, self.target, 10,'accuracy')
+    	logreg_scores = ten_cv_log_reg.compute_scores()
+
+    	assert_that(len(knn_scores), is_(10))
+    	assert_that(len(logreg_scores), is_(10))

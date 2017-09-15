@@ -20,11 +20,12 @@ class KFoldCrossValidation(object):
 	 	self.scoring =scoring
 	 
 	 def compute_scores(self):
-	 	self.scores = cross_val_score(self.estimator,
+	 	scores = cross_val_score(self.estimator,
 	 		                          self.feature_data,
 	 		                          self.target,
 	 		                          cv = self.cv,
 	 		                          scoring = self.scoring)
+	 	return scores
 
 
 
