@@ -99,14 +99,13 @@ class SupervisedDataSet(AbstractDataSet, SchemaConfigured):
         """
         Gets a matrix of input values without the predictor
         """
-        without_pred = self._data.drop(self._prediction_column)
-        return without_pred.as_matrix()
+        return self._data.as_matrix()
 
     def get_predictors(self):
         """
         Gets a matrix of only the predictors
         """
-        return self._data[self.prediction_column].as_matrix()
+        return self._prediction_data.as_matrix()
 
 
 @interface.implementer(ISupervisedModel)

@@ -8,6 +8,7 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import assert_that
+from hamcrest import greater_than
 
 from nti.testing.matchers import validly_provides
 
@@ -36,4 +37,4 @@ class TestSupervisedModels(SupervisedLearningLayerTest):
         assert_that(reg, validly_provides(IRegressor))
         # train
         reg.train()
-        print(reg.rmse)
+        assert_that(reg.rmse, greater_than(0.5))

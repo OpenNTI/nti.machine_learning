@@ -9,10 +9,7 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from numpy import dot
 from numpy import sqrt
-
-from sklearn.cross_validation import KFold
 
 from sklearn.linear_model import LinearRegression
 
@@ -21,6 +18,8 @@ from zope import interface
 from nti.machine_learning.algorithms.supervised import SupervisedModel
 
 from nti.machine_learning.algorithms.supervised.interfaces import IRegressor
+
+from nti.machine_learning.model_evaluation.cross_validation import KFoldCrossValidation
 
 @interface.implementer(IRegressor)
 class Regressor(SupervisedModel):
@@ -31,16 +30,10 @@ class Regressor(SupervisedModel):
         self.clf = LinearRegression(**kwargs)
 
     def train(self):
-        kf = KFold(self._data.total_size(), n_folds=10)
-        err = 0
-        x = self._data.get_frame_no_predictor()
-        y = self._data.get_predictors()
-        for train, test in kf:
-            self.clf.fit(x[train], y[train])
-            test_vals = self.classify(x[test])
-            out = p - y[test]
-            err += dot(out, out)
-        self.rmse = err/self._data.total_size()
+        kf = KFoldCrossValidation(self.clf, self._data.get_frame_no_predictor(),
+                                  self._data.get_predictors(), 10, 'neg_mean_squared_error')
+        scores = kf.compute_scores()
+        self.rmse = sqrt(abs(scores.mean()))
 
     def classify(self, inputs):
         return self.clf.predict(inputs)
