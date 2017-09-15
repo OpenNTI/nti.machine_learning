@@ -86,7 +86,7 @@ class UnsupervisedLearningLayerTest(unittest.TestCase):
 
 from sklearn.datasets import load_iris
 
-class ModelEvalutionLayerTest(unittest.TestCase):
+class ModelEvaluationLayerTest(unittest.TestCase):
     layer = SharedConfiguringTestLayer
 
     @classmethod

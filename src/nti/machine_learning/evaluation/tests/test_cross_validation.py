@@ -21,10 +21,10 @@ from nti.machine_learning.evaluation.cross_validation import KFoldCrossValidatio
 
 from nti.machine_learning.evaluation.interfaces import IKFoldCrossValidation
 
-from nti.machine_learning.tests import ModelEvalutionLayerTest
+from nti.machine_learning.tests import ModelEvaluationLayerTest
 
 
-class TestKFoldCrossValidation(ModelEvalutionLayerTest):
+class TestKFoldCrossValidation(ModelEvaluationLayerTest):
 
     def test_basic_10fold_cross_validation(self):
         knn = KNeighborsClassifier(n_neighbors=5)
