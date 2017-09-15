@@ -30,7 +30,7 @@ class IUnsupervisedModel(IModel):
     def cluster():
         """
         Performs the clustering actions, returning
-        the NTIDataFrame containing the points with an additional
+        the DataFrame containing the points with an additional
         column dictating the cluster they belong to.
         """
 

@@ -45,7 +45,7 @@ class SharedConfiguringTestLayer(ZopeComponentLayer,
         pass
 
 
-from nti.machine_learning import NTIDataFrame
+from nti.machine_learning import DataFrame
 
 
 class SupervisedLearningLayerTest(unittest.TestCase):
@@ -60,7 +60,7 @@ class SupervisedLearningLayerTest(unittest.TestCase):
             y = randint(0, 1)
             xor = x ^ y
             examples.append([x, y, xor])
-        self.example_frame = NTIDataFrame(examples, columns=['x', 'y', 'xor'])
+        self.example_frame = DataFrame(examples, columns=['x', 'y', 'xor'])
         self.example_prediction_columns = ['xor']
 
 
@@ -81,7 +81,7 @@ class UnsupervisedLearningLayerTest(unittest.TestCase):
             y = randint(0, 100)
             z = randint(0, 100)
             points.append([x, y, z])
-        self.example_frame = NTIDataFrame(points, columns=['x', 'y', 'z'])
+        self.example_frame = DataFrame(points, columns=['x', 'y', 'z'])
 
 
 from sklearn.datasets import load_iris
@@ -95,5 +95,3 @@ class ModelEvaluationLayerTest(unittest.TestCase):
         self.feature_data = iris.data
         self.target = iris.target
         self.feature_names = iris.feature_names
-
-

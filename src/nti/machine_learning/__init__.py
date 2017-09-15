@@ -21,20 +21,8 @@ from zope import interface
 
 from nti.machine_learning.interfaces import IModel
 from nti.machine_learning.interfaces import IDataSet
-from nti.machine_learning.interfaces import IDataFrame
 
 FORMAT = '%(asctime)-15s %(message)s'
-
-# I think we'll need to extend this later, but
-# for now it's good as is
-
-
-@interface.implementer(IDataFrame)
-class NTIDataFrame(DataFrame):
-    """
-    Provides an extension to a pandas data frame
-    """
-
 
 @interface.implementer(IModel)
 class Model(object):

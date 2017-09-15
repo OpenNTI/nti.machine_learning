@@ -37,7 +37,7 @@ class IDataFrame(interface.Interface):
 class IDataSet(interface.Interface):
     """
     Interface that models an underlying data set
-    for a learning model constructed with an NTIDataFrame.
+    for a learning model constructed with an DataFrame.
     """
 
     data = Object(IDataFrame,

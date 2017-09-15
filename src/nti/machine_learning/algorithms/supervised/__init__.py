@@ -16,7 +16,7 @@ from numpy.random import shuffle
 from zope import interface
 
 from nti.machine_learning import Model
-from nti.machine_learning import NTIDataFrame
+from nti.machine_learning import DataFrame
 from nti.machine_learning import AbstractDataSet
 
 from nti.machine_learning.algorithms.supervised.interfaces import ISVM
@@ -122,8 +122,8 @@ class SupervisedModel(Model, SchemaConfigured):
     validation_set_outputs = alias('_validation_set_outputs')
 
     def __init__(self, data_frame, prediction_column, training_set_ratio=DEFAULT_TRAINING_SET_RATIO):
-        if not isinstance(data_frame, NTIDataFrame):
-            raise TypeError("data_frame must be of type NTIDataFrame")
+        if not isinstance(data_frame, DataFrame):
+            raise TypeError("data_frame must be of type DataFrame")
         if len(data_frame) <= 1:
             raise ValueError("Insufficient data set size")
         self._data = SupervisedDataSet(data_frame, prediction_column,
