@@ -11,11 +11,15 @@ from hamcrest import is_
 from hamcrest import assert_that
 from hamcrest import greater_than
 
+from nti.testing.matchers import validly_provides
+
 from sklearn.neighbors import KNeighborsClassifier
 
 from sklearn.linear_model import LogisticRegression
 
 from nti.machine_learning.evaluation.cross_validation import KFoldCrossValidation
+
+from nti.machine_learning.evaluation.interfaces import IKFoldCrossValidation
 
 from nti.machine_learning.tests import ModelEvalutionLayerTest
 
@@ -26,6 +30,7 @@ class TestKFoldCrossValidation(ModelEvalutionLayerTest):
         knn = KNeighborsClassifier(n_neighbors=5)
         ten_cv = KFoldCrossValidation(knn, self.feature_data,
                                       self.target, 10, 'accuracy')
+        assert_that(ten_cv, validly_provides(IKFoldCrossValidation))
         scores = ten_cv.compute_scores()
         assert_that(len(scores), is_(10))
 

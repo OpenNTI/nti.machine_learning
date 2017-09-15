@@ -11,7 +11,12 @@ logger = __import__('logging').getLogger(__name__)
 
 from sklearn.cross_validation import cross_val_score
 
+from zope import interface
 
+from nti.machine_learning.evaluation.interfaces import IKFoldCrossValidation
+
+
+@interface.implementer(IKFoldCrossValidation)
 class KFoldCrossValidation(object):
 
     def __init__(self, estimator, feature_data, target, cv, scoring):
