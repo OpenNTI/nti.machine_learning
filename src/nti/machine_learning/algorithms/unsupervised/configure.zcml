@@ -8,6 +8,7 @@
 
     <utility factory=".density.DBScan"
              provides=".interfaces.IDBScan" />
+
     <utility factory=".geometric.KMeans"
              provides=".interfaces.IKMeans" />
 
