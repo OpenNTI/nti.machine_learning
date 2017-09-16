@@ -14,7 +14,6 @@ from nti.machine_learning.interfaces import IDataSet
 
 from nti.schema.field import Int
 from nti.schema.field import Dict
-from nti.schema.field import Number
 from nti.schema.field import TextLine
 
 
