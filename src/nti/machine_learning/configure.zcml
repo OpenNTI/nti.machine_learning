@@ -6,7 +6,6 @@
     <include package="zope.component" file="meta.zcml" />
     <include package="zope.component" />
 
-    <include package=".algorithms.supervised" />
-    <include package=".algorithms.unsupervised" />
+    <include package=".algorithms" />
 
 </configure>

@@ -14,8 +14,6 @@ from zope import component
 
 from nti.testing.matchers import validly_provides
 
-from nti.machine_learning.algorithms.supervised.k_nearest_neighbors import KNearestNeighborsClassifier
-
 from nti.machine_learning.algorithms.supervised.interfaces import IKNearestNeighborsClassifier
 
 from nti.machine_learning.tests import BinaryClassifierLayerTest

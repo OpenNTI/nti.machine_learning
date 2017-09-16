@@ -15,8 +15,6 @@ from nti.machine_learning import Model
 from nti.machine_learning import DataFrame
 from nti.machine_learning import AbstractDataSet
 
-from nti.machine_learning.algorithms.supervised.interfaces import ISVM
-from nti.machine_learning.algorithms.supervised.interfaces import INeuralNetwork
 from nti.machine_learning.algorithms.supervised.interfaces import ISupervisedModel
 from nti.machine_learning.algorithms.supervised.interfaces import ISupervisedDataSet
 
