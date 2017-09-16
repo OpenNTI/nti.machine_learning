@@ -9,9 +9,16 @@ __docformat__ = "restructuredtext en"
 
 import unittest
 
+import numpy as np
+
+from sklearn.datasets import load_iris
+from sklearn.datasets import load_breast_cancer
+
 from random import randint
 
 from zope.component.hooks import setHooks
+
+from nti.machine_learning import DataFrame
 
 from nti.testing.layers import GCLayerMixin
 from nti.testing.layers import ZopeComponentLayer
@@ -84,9 +91,8 @@ class UnsupervisedLearningLayerTest(unittest.TestCase):
         self.example_frame = DataFrame(points, columns=['x', 'y', 'z'])
 
 
-from sklearn.datasets import load_iris
-
 class ModelEvaluationLayerTest(unittest.TestCase):
+
     layer = SharedConfiguringTestLayer
 
     @classmethod
@@ -95,3 +101,27 @@ class ModelEvaluationLayerTest(unittest.TestCase):
         self.feature_data = iris.data
         self.target = iris.target
         self.feature_names = iris.feature_names
+
+
+class MultiClassClassifierLayerTest(unittest.TestCase):
+
+    layer = SharedConfiguringTestLayer
+
+    @classmethod
+    def setUp(self):
+        iris = load_iris()
+        self.data_frame = DataFrame(data=np.c_[iris['data'], iris['target']],
+                                       columns=iris['feature_names'] + ['target'])
+        self.prediction_column = ['target']
+
+
+class BinaryClassifierLayerTest(unittest.TestCase):
+
+    layer = SharedConfiguringTestLayer
+
+    @classmethod
+    def setUp(self):
+        data = load_breast_cancer()
+        self.data_frame = DataFrame(data=np.c_[data['data'], data['target']],
+                                       columns=data['feature_names'].tolist() + ['target'])
+        self.prediction_column = ['target']

@@ -17,7 +17,7 @@ from nti.machine_learning.algorithms.supervised import SupervisedModel
 
 from nti.machine_learning.algorithms.supervised.interfaces import ISVM
 
-from nti.machine_learning.model_evaluation.cross_validation import KFoldCrossValidation
+from nti.machine_learning.evaluation.cross_validation import KFoldCrossValidation
 
 
 @interface.implementer(ISVM)
@@ -27,7 +27,7 @@ class SupportVectorMachine(SupervisedModel):
     """
 
     def classify(self, inputs):
-        return self.clf.predict([inputs])
+        return self.classifier.predict([inputs])
 
     def train(self, data_frame, prediction_columns, **kwargs):
         super(SupportVectorMachine, self).train(data_frame,

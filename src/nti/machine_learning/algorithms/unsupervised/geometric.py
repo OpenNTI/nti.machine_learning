@@ -27,7 +27,7 @@ class KMeans(AbstractClusterModel):
     to find.
     """
 
-    def cluster(self, data_frame, k=2, **kwargs):
+    def cluster(self, data_frame, **kwargs):
         """
         Performs KMeans clustering.
 
@@ -35,7 +35,7 @@ class KMeans(AbstractClusterModel):
         the given k clusters, no matter the distribution.
         """
         super(KMeans, self).cluster(data_frame)
-        self.cls = SK_KMeans(n_clusters=k, **kwargs)
+        self.cls = SK_KMeans(**kwargs)
         return self.cls.fit_predict(self._data.to_matrix())
 
     @property

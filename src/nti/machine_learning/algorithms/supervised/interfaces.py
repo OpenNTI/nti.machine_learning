@@ -13,7 +13,6 @@ from nti.machine_learning.interfaces import IModel
 from nti.machine_learning.interfaces import IDataSet
 
 from nti.schema.field import Number
-from nti.schema.field import ListOrTuple
 
 
 class ISupervisedModel(IModel):
@@ -95,7 +94,20 @@ class ISVM(ISupervisedModel):
     Outlines a Support Vector Machine learning model.
     """
 
+
 class IRegressor(ISupervisedModel):
     """
     Outlines a regression model
+    """
+
+
+class IKNearestNeighborsClassifier(ISupervisedModel):
+    """
+    Outlines of a k-Nearest Neighbors classifier
+    """
+
+
+class IKNearestNeighborsRegressor(ISupervisedModel):
+    """
+    Outlines of a k-Nearest Neighbors regressor
     """

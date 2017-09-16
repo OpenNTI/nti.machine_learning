@@ -12,5 +12,9 @@
              provides=".interfaces.IRegressor" />
     <utility factory=".neural_network.NeuralNetwork"
              provides=".interfaces.INeuralNetwork" />
+    <utility factory=".k_nearest_neighbors.KNearestNeighborsClassifier"
+             provides=".interfaces.IKNearestNeighborsClassifier" />
+    <utility factory=".k_nearest_neighbors.KNearestNeighborsRegressor"
+             provides=".interfaces.IKNearestNeighborsRegressor" />
 
 </configure>

@@ -19,7 +19,7 @@ from nti.machine_learning.algorithms.supervised import SupervisedModel
 
 from nti.machine_learning.algorithms.supervised.interfaces import IRegressor
 
-from nti.machine_learning.model_evaluation.cross_validation import KFoldCrossValidation
+from nti.machine_learning.evaluation.cross_validation import KFoldCrossValidation
 
 @interface.implementer(IRegressor)
 class Regressor(SupervisedModel):
@@ -34,4 +34,4 @@ class Regressor(SupervisedModel):
         self.rmse = sqrt(abs(scores.mean()))
 
     def classify(self, inputs):
-        return self.clf.predict(inputs)
+        return self.classifier.predict(inputs)

@@ -28,9 +28,9 @@ class DBScan(AbstractClusterModel):
     splitting clusters when the eps paramter is not met
     """
 
-    def cluster(self, data_frame, eps=0.1, min_samples=50, **kwargs):
+    def cluster(self, data_frame, **kwargs):
         super(DBScan, self).cluster(data_frame)
-        self.cls = SK_DBSCAN(eps=eps, min_samples=min_samples, **kwargs)
+        self.cls = SK_DBSCAN(**kwargs)
         return self.cls.fit_predict(self._data.to_matrix())
 
     @property
