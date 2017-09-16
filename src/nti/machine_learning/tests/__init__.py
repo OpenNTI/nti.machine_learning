@@ -52,9 +52,6 @@ class SharedConfiguringTestLayer(ZopeComponentLayer,
         pass
 
 
-from nti.machine_learning import DataFrame
-
-
 class SupervisedLearningLayerTest(unittest.TestCase):
 
     layer = SharedConfiguringTestLayer
@@ -111,7 +108,7 @@ class MultiClassClassifierLayerTest(unittest.TestCase):
     def setUp(self):
         iris = load_iris()
         self.data_frame = DataFrame(data=np.c_[iris['data'], iris['target']],
-                                       columns=iris['feature_names'] + ['target'])
+                                    columns=iris['feature_names'] + ['target'])
         self.prediction_column = ['target']
 
 
@@ -123,5 +120,5 @@ class BinaryClassifierLayerTest(unittest.TestCase):
     def setUp(self):
         data = load_breast_cancer()
         self.data_frame = DataFrame(data=np.c_[data['data'], data['target']],
-                                       columns=data['feature_names'].tolist() + ['target'])
+                                    columns=data['feature_names'].tolist() + ['target'])
         self.prediction_column = ['target']
