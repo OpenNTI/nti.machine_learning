@@ -78,3 +78,13 @@ class IRegressor(ISupervisedModel):
     """
     Outlines a regression model
     """
+
+class IKNearestNeighborsClassifier(ISupervisedModel):
+    """
+    Outlines of a k-Nearest Neighbors classifier
+    """
+
+class IKNearestNeighborsRegressor(ISupervisedModel):
+    """
+    Outlines of a k-Nearest Neighbors regressor
+    """

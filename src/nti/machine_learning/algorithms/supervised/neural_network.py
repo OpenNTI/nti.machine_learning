@@ -17,7 +17,7 @@ from nti.machine_learning.algorithms.supervised import SupervisedModel
 
 from nti.machine_learning.algorithms.supervised.interfaces import INeuralNetwork
 
-from nti.machine_learning.model_evaluation.cross_validation import KFoldCrossValidation
+from nti.machine_learning.evaluation.cross_validation import KFoldCrossValidation
 
 
 @interface.implementer(INeuralNetwork)
