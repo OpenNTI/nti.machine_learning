@@ -14,6 +14,7 @@ import numpy as np
 import pandas as pd
 
 from sklearn.datasets import load_iris
+from sklearn.datasets import load_breast_cancer
 
 from random import randint
 
@@ -101,12 +102,23 @@ class ModelEvaluationLayerTest(unittest.TestCase):
         self.feature_names = iris.feature_names
 
 
-class MultiClassClassifierEstimatorLayerTest(unittest.TestCase):
+class MultiClassClassifierLayerTest(unittest.TestCase):
     layer = SharedConfiguringTestLayer
 
     @classmethod
     def setUp(self):
         iris = load_iris()
         self.data_frame = pd.DataFrame(data=np.c_[iris['data'], iris['target']],
-            columns = iris['feature_names'] + ['target'])
+                                       columns = iris['feature_names'] + ['target'])
+        self.prediction_column=['target']
+
+
+class BinaryClassifierLayerTest(unittest.TestCase):
+    layer = SharedConfiguringTestLayer
+
+    @classmethod
+    def setUp(self):
+        data = load_breast_cancer()
+        self.data_frame = pd.DataFrame(data=np.c_[data['data'], data['target']],
+                                       columns = data['feature_names'].tolist() + ['target'])
         self.prediction_column=['target']

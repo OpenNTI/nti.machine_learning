@@ -17,9 +17,24 @@ from nti.machine_learning.algorithms.supervised.k_nearest_neighbors import KNear
 from nti.machine_learning.algorithms.supervised.interfaces import IKNearestNeighborsClassifier
 from nti.machine_learning.algorithms.supervised.interfaces import IKNearestNeighborsRegressor
 
-from nti.machine_learning.tests import MultiClassClassifierEstimatorLayerTest
+from nti.machine_learning.tests import BinaryClassifierLayerTest
+from nti.machine_learning.tests import MultiClassClassifierLayerTest
 
-class TestKNearestNeighborsClassifier(MultiClassClassifierEstimatorLayerTest):
+
+class TestKNearestNeighborsBinaryClassifier(BinaryClassifierLayerTest):
+	def test_basic_knn_classifier(self):
+		knn_classifier = KNearestNeighborsClassifier(self.data_frame, 
+			self.prediction_column)
+
+		assert_that(knn_classifier, validly_provides(IKNearestNeighborsClassifier))
+
+		knn_classifier.train()
+		classification_accuracy = knn_classifier.scores.mean()
+
+		assert_that(classification_accuracy, greater_than(0))
+
+
+class TestKNearestNeighborsClassifier(MultiClassClassifierLayerTest):
 	def test_basic_knn_classifier(self):
 		knn_classifier = KNearestNeighborsClassifier(self.data_frame, 
 			self.prediction_column)
