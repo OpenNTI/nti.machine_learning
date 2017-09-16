@@ -92,6 +92,7 @@ class UnsupervisedLearningLayerTest(unittest.TestCase):
 
 
 class ModelEvaluationLayerTest(unittest.TestCase):
+
     layer = SharedConfiguringTestLayer
 
     @classmethod
@@ -103,22 +104,24 @@ class ModelEvaluationLayerTest(unittest.TestCase):
 
 
 class MultiClassClassifierLayerTest(unittest.TestCase):
+
     layer = SharedConfiguringTestLayer
 
     @classmethod
     def setUp(self):
         iris = load_iris()
         self.data_frame = pd.DataFrame(data=np.c_[iris['data'], iris['target']],
-                                       columns = iris['feature_names'] + ['target'])
-        self.prediction_column=['target']
+                                       columns=iris['feature_names'] + ['target'])
+        self.prediction_column = ['target']
 
 
 class BinaryClassifierLayerTest(unittest.TestCase):
+
     layer = SharedConfiguringTestLayer
 
     @classmethod
     def setUp(self):
         data = load_breast_cancer()
         self.data_frame = pd.DataFrame(data=np.c_[data['data'], data['target']],
-                                       columns = data['feature_names'].tolist() + ['target'])
-        self.prediction_column=['target']
+                                       columns=data['feature_names'].tolist() + ['target'])
+        self.prediction_column = ['target']
