@@ -21,12 +21,12 @@ from nti.machine_learning.algorithms.supervised.interfaces import IRegressor
 
 from nti.machine_learning.evaluation.cross_validation import KFoldCrossValidation
 
+
 @interface.implementer(IRegressor)
 class Regressor(SupervisedModel):
 
     def train(self, data_frame, prediction_columns, **kwargs):
-        super(Regressor, self).train(data_frame,
-                                     prediction_columns)
+        super(Regressor, self).train(data_frame, prediction_columns)
         self.clf = LinearRegression(**kwargs)
         kf = KFoldCrossValidation(self.clf, self._data.get_frame_no_predictor(),
                                   self._data.get_predictors(), 10, 'neg_mean_squared_error')

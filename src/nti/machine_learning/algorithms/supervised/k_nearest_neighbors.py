@@ -35,6 +35,7 @@ class KNearestNeighborsClassifier(SupervisedModel):
                                   self._data.get_predictors(), k, metric)
         self.success_rate = kf.compute_scores().mean()
 
+
 @interface.implementer(IKNearestNeighborsRegressor)
 class KNearestNeighborsRegressor(SupervisedModel):
 

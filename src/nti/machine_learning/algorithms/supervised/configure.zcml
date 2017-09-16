@@ -8,12 +8,16 @@
 
     <utility factory=".support_vector_machine.SupportVectorMachine"
              provides=".interfaces.ISVM" />
+
     <utility factory=".regression.Regressor"
              provides=".interfaces.IRegressor" />
+ 
     <utility factory=".neural_network.NeuralNetwork"
              provides=".interfaces.INeuralNetwork" />
+
     <utility factory=".k_nearest_neighbors.KNearestNeighborsClassifier"
              provides=".interfaces.IKNearestNeighborsClassifier" />
+
     <utility factory=".k_nearest_neighbors.KNearestNeighborsRegressor"
              provides=".interfaces.IKNearestNeighborsRegressor" />
 
