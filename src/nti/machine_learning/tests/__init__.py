@@ -101,7 +101,7 @@ class ModelEvaluationLayerTest(unittest.TestCase):
         self.feature_names = iris.feature_names
 
 
-class ClassifierEstimatorLayerTest(unittest.TestCase):
+class MultiClassClassifierEstimatorLayerTest(unittest.TestCase):
     layer = SharedConfiguringTestLayer
 
     @classmethod
