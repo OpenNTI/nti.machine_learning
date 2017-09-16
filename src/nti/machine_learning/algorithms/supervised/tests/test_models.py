@@ -9,32 +9,45 @@ __docformat__ = "restructuredtext en"
 
 from hamcrest import assert_that
 from hamcrest import greater_than
+from hamcrest import has_property
+
+from zope import component
 
 from nti.testing.matchers import validly_provides
 
 from nti.machine_learning.algorithms.supervised.interfaces import ISVM
 from nti.machine_learning.algorithms.supervised.interfaces import IRegressor
-
-from nti.machine_learning.algorithms import Regressor
-from nti.machine_learning.algorithms import SupportVectorMachine
+from nti.machine_learning.algorithms.supervised.interfaces import INeuralNetwork
 
 from nti.machine_learning.tests import SupervisedLearningLayerTest
 
 
 class TestSupervisedModels(SupervisedLearningLayerTest):
+    """
+    Test the validity of the various supervised models.
+    """
 
     def test_svm(self):
-        svm = SupportVectorMachine(self.example_frame,
-                                   self.example_prediction_columns)
+        svm = component.getUtility(ISVM)
         assert_that(svm, validly_provides(ISVM))
         # train
-        svm.train()
+        svm.train(self.example_frame, self.example_prediction_columns)
+        assert_that(has_property(svm, 'success_rate'))
         assert_that(svm.success_rate, 1.0)
 
     def test_regression(self):
-        reg = Regressor(self.example_frame,
-                        self.example_prediction_columns)
+        reg = component.getUtility(IRegressor)
         assert_that(reg, validly_provides(IRegressor))
         # train
-        reg.train()
+        reg.train(self.example_frame, self.example_prediction_columns)
+        assert_that(has_property(reg, 'rmse'))
         assert_that(reg.rmse, greater_than(0.0))
+
+    def test_neural_network(self):
+        nn = component.getUtility(INeuralNetwork)
+        assert_that(nn, validly_provides(INeuralNetwork))
+        # train
+        nn.train(self.example_frame, self.example_prediction_columns,
+                 layers=(3,), max_iter=500, solver='sgd')
+        assert_that(has_property(nn, 'success_rate'))
+        assert_that(nn.success_rate, greater_than(0.0))

@@ -26,15 +26,13 @@ class NeuralNetwork(SupervisedModel):
     Abstraction of a multi-layer perceptron classifier from sci-kit learn
     """
 
-    def __init__(self, data_frame, prediction_column, layers, **kwargs):
-        super(NeuralNetwork, self).__init__(data_frame,
-                                            prediction_column)
-        self.clf = MLPClassifier(hidden_layer_sizes=layers, **kwargs)
-
     def classify(self, inputs):
         return self.clf.predict([inputs])
 
-    def train(self):
+    def train(self, data_frame, prediction_columns, layers, **kwargs):
+        super(NeuralNetwork, self).train(data_frame,
+                                         prediction_columns)
+        self.clf = MLPClassifier(hidden_layer_sizes=layers, **kwargs)
         kf = KFoldCrossValidation(self.clf, self._data.get_frame_no_predictor(),
                                   self._data.get_predictors(), 10, 'accuracy')
         scores = kf.compute_scores()

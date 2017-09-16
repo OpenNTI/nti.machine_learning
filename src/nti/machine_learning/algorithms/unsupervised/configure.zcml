@@ -6,7 +6,9 @@
     <include package="zope.component" file="meta.zcml" />
     <include package="zope.component" />
 
-    <include package=".algorithms.supervised" />
-    <include package=".algorithms.unsupervised" />
+    <utility factory=".density.DBScan"
+             provides=".interfaces.IDBScan" />
+    <utility factory=".geometric.KMeans"
+             provides=".interfaces.IKMeans" />
 
 </configure>

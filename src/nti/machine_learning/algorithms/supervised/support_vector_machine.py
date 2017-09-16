@@ -26,15 +26,13 @@ class SupportVectorMachine(SupervisedModel):
     Abstraction of the SciKit Learn Support Vector Machine.
     """
 
-    def __init__(self, data_frame, prediction_column, **kwargs):
-        super(SupportVectorMachine, self).__init__(data_frame,
-                                                   prediction_column)
-        self.clf = SVC(**kwargs)
-
     def classify(self, inputs):
         return self.clf.predict([inputs])
 
-    def train(self):
+    def train(self, data_frame, prediction_columns, **kwargs):
+        super(SupportVectorMachine, self).train(data_frame,
+                                                prediction_columns)
+        self.clf = SVC(**kwargs)
         kf = KFoldCrossValidation(self.clf, self._data.get_frame_no_predictor(),
                                   self._data.get_predictors(), 10, 'accuracy')
         scores = kf.compute_scores()

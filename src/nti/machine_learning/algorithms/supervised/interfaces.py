@@ -27,11 +27,22 @@ class ISupervisedModel(IModel):
     def classify(inputs):
         """
         Classifies a set of inputs
+
+        inputs:
+            The inputs to be classified.
         """
 
-    def train():
+    def train(data_frame, prediction_columns):
         """
         Govern training of the model
+
+        data_frame:
+            The DataFrame containing all necessary data
+            to train the model.
+
+        prediction_columns:
+             A list of columns the model is attempting
+             to predict.
         """
 
 
@@ -67,6 +78,16 @@ class INeuralNetwork(ISupervisedModel):
     Outlines an ANN learning model that has an
     adaptable structure.
     """
+
+    def train(data_frame, prediction_columns, layers):
+        """
+        Trains the Articial Neural Netowork
+
+        The only difference between this train and the
+        ISupervisedModel train is this train allows for the
+        configurability of the layers, which is required rather
+        than using a default in kwargs.
+        """
 
 
 class ISVM(ISupervisedModel):

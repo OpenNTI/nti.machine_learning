@@ -37,17 +37,17 @@ class AbstractClusterModel(Model, SchemaConfigured):
     data = alias('_data')
     dimensions = alias('_dimensions')
 
-    def __init__(self, data_frame):
+    def cluster(self, data_frame):
+        """
+        Function that performs the clustering.
+
+        data_frame:
+            The frame containing data to be clustered.
+        """
         if len(data_frame.index.values) <= 1:
             raise ValueError('Points list length must be > 1')
         self._dimensions = len(data_frame.columns)
         self._data = UnsupervisedDataSet(data_frame)
-
-    def cluster(self):
-        """
-        Function that performs the clustering.
-        """
-        raise NotImplementedError('cluster method must be provided.')
 
 
 @interface.implementer(IUnsupervisedDataSet)
