@@ -26,7 +26,7 @@ setup(
     description="NTI Machine Learning",
     long_description=(_read('README.rst') + '\n\n' + _read("CHANGES.rst")),
     license='Apache',
-    keywords='Base',
+    keywords='machine learning',
     classifiers=[
         'Intended Audience :: Developers',
         'Natural Language :: English',
