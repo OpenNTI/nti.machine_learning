@@ -9,6 +9,12 @@ __docformat__ = "restructuredtext en"
 
 import unittest
 
+import numpy as np
+
+import pandas as pd
+
+from sklearn.datasets import load_iris
+
 from random import randint
 
 from zope.component.hooks import setHooks
@@ -84,8 +90,6 @@ class UnsupervisedLearningLayerTest(unittest.TestCase):
         self.example_frame = DataFrame(points, columns=['x', 'y', 'z'])
 
 
-from sklearn.datasets import load_iris
-
 class ModelEvaluationLayerTest(unittest.TestCase):
     layer = SharedConfiguringTestLayer
 
@@ -95,3 +99,14 @@ class ModelEvaluationLayerTest(unittest.TestCase):
         self.feature_data = iris.data
         self.target = iris.target
         self.feature_names = iris.feature_names
+
+
+class ClassifierEstimatorLayerTest(unittest.TestCase):
+    layer = SharedConfiguringTestLayer
+
+    @classmethod
+    def setUp(self):
+        iris = load_iris()
+        self.data_frame = pd.DataFrame(data=np.c_[iris['data'], iris['target']],
+            columns = iris['feature_names'] + ['target'])
+        self.prediction_column=['target']
