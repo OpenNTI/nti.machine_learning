@@ -25,24 +25,25 @@ from nti.machine_learning.evaluation.cross_validation import KFoldCrossValidatio
 @interface.implementer(IKNearestNeighborsClassifier)
 class KNearestNeighborsClassifier(SupervisedModel):
 
-    def __init__(self, data_frame, prediction_column, **kwargs):
-        super(KNearestNeighborsClassifier, self).__init__(data_frame, prediction_column)
-        self.classifier = KNeighborsClassifier(**kwargs)
+    def classify(self, inputs):
+        return self.cls.predict(inputs)
 
-    def train(self, metric='accuracy', k=10):
-        kf = KFoldCrossValidation(self.classifier, self._data.get_frame_no_predictor(),
+    def train(self, data_frame, prediction_column, metric='accuracy', k=10, **kwargs):
+        super(KNearestNeighborsClassifier, self).train(data_frame, prediction_column)
+        self.cls = KNeighborsClassifier(**kwargs)
+        kf = KFoldCrossValidation(self.cls, self._data.get_frame_no_predictor(),
                                   self._data.get_predictors(), k, metric)
-        self.scores = kf.compute_scores()
-
+        self.success_rate = kf.compute_scores().mean()
 
 @interface.implementer(IKNearestNeighborsRegressor)
 class KNearestNeighborsRegressor(SupervisedModel):
 
-    def __init__(self, data_frame, prediction_column, **kwargs):
-        super(KNearestNeighborsClassifier, self).__init__(data_frame, prediction_column)
-        self.classifier = KNeighborsRegressor(**kwargs)
+    def classify(self, inputs):
+        return self.cls.predict(inputs)
 
-    def train(self, metric='neg_mean_squared_error', k=10):
-        kf = KFoldCrossValidation(self.classifier, self._data.get_frame_no_predictor(),
+    def train(self, data_frame, prediction_column, metric='neg_mean_squared_error', k=10, **kwargs):
+        super(KNearestNeighborsClassifier, self).train(data_frame, prediction_column)
+        self.cls = KNeighborsRegressor(**kwargs)
+        kf = KFoldCrossValidation(self.cls, self._data.get_frame_no_predictor(),
                                   self._data.get_predictors(), k, metric)
-        self.scores = kf.compute_scores()
+        self.success_rate = kf.compute_scores().mean()

@@ -24,13 +24,11 @@ from nti.machine_learning.evaluation.cross_validation import KFoldCrossValidatio
 @interface.implementer(IRegressor)
 class Regressor(SupervisedModel):
 
-    def __init__(self, data_frame, prediction_columns, **kwargs):
-        super(Regressor, self).__init__(data_frame,
-                                        prediction_columns)
-        self.classifier = LinearRegression(**kwargs)
-
-    def train(self):
-        kf = KFoldCrossValidation(self.classifier, self._data.get_frame_no_predictor(),
+    def train(self, data_frame, prediction_columns, **kwargs):
+        super(Regressor, self).train(data_frame,
+                                     prediction_columns)
+        self.clf = LinearRegression(**kwargs)
+        kf = KFoldCrossValidation(self.clf, self._data.get_frame_no_predictor(),
                                   self._data.get_predictors(), 10, 'neg_mean_squared_error')
         scores = kf.compute_scores()
         self.rmse = sqrt(abs(scores.mean()))

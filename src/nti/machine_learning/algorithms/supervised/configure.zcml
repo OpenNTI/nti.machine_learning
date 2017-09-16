@@ -1,0 +1,20 @@
+<!-- -*- mode: nxml -*- -->
+<configure  xmlns="http://namespaces.zope.org/zope"
+            xmlns:i18n="http://namespaces.zope.org/i18n"
+            xmlns:zcml="http://namespaces.zope.org/zcml">
+
+    <include package="zope.component" file="meta.zcml" />
+    <include package="zope.component" />
+
+    <utility factory=".support_vector_machine.SupportVectorMachine"
+             provides=".interfaces.ISVM" />
+    <utility factory=".regression.Regressor"
+             provides=".interfaces.IRegressor" />
+    <utility factory=".neural_network.NeuralNetwork"
+             provides=".interfaces.INeuralNetwork" />
+    <utility factory=".k_nearest_neighbors.KNearestNeighborsClassifier"
+             provides=".interfaces.IKNearestNeighborsClassifier" />
+    <utility factory=".k_nearest_neighbors.KNearestNeighborsRegressor"
+             provides=".interfaces.IKNearestNeighborsRegressor" />
+
+</configure>

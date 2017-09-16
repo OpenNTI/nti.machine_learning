@@ -80,22 +80,19 @@ class SupervisedModel(Model, SchemaConfigured):
 
     data = alias('_data')
 
-    def __init__(self, data_frame, prediction_column):
-        if not isinstance(data_frame, DataFrame):
-            raise TypeError("data_frame must be of type DataFrame")
-        if len(data_frame) <= 1:
-            raise ValueError("Insufficient data set size")
-        self._data = SupervisedDataSet(data_frame, prediction_column)
-
     def classify(self, inputs):
         """
         Classify a set of inputs
         """
         raise NotImplementedError("classify function not implemented")
 
-    def train(self):
+    def train(self, data_frame, prediction_columns):
         """
         Train the model. Time consuming, therefore it is its own method
         that must be called rather than in the constructor.
         """
-        raise NotImplementedError("train function not implemented")
+        if not isinstance(data_frame, DataFrame):
+            raise TypeError("data_frame must be of type DataFrame")
+        if len(data_frame) <= 1:
+            raise ValueError("Insufficient data set size")
+        self._data = SupervisedDataSet(data_frame, prediction_columns)

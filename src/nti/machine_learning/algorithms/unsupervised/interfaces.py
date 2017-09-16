@@ -27,11 +27,15 @@ class IUnsupervisedModel(IModel):
                      description=u"Value representing absence of a cluster",
                      default=-1)
 
-    def cluster():
+    def cluster(data_fame):
         """
         Performs the clustering actions, returning
         the DataFrame containing the points with an additional
         column dictating the cluster they belong to.
+
+        data_frame:
+            A pandas data frame containing the data
+            to be clustered
         """
 
 
@@ -93,30 +97,8 @@ class IKMeans(IUnsupervisedModel):
     Represents a KMeans clustering model.
     """
 
-    k = Int(title=u"K",
-            description=u"The number of points to find",
-            default=2)
-
 
 class IDBScan(IUnsupervisedModel):
     """
     Represents a DBScan clustering model
     """
-
-    min_pts = Int(title=u"Minimum Points",
-                  description=u"The minimum number of points to define a cluster",
-                  default=50)
-
-    eps = Number(title=u"Epsilon",
-                 description=u"The epsilon tolerance for density",
-                 default=0.1)
-
-
-class IEntropic(IUnsupervisedModel):
-    """
-    Represents an entropic clustering model
-    """
-
-    beta = Number(title=u"Beta",
-                  description=u"The beta tolerance for similarity in points",
-                  default=0.5)

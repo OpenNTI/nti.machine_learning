@@ -10,6 +10,8 @@ __docformat__ = "restructuredtext en"
 from hamcrest import assert_that
 from hamcrest import greater_than
 
+from zope import component
+
 from nti.testing.matchers import validly_provides
 
 from nti.machine_learning.algorithms.supervised.k_nearest_neighbors import KNearestNeighborsClassifier
@@ -23,27 +25,22 @@ from nti.machine_learning.tests import MultiClassClassifierLayerTest
 class TestKNearestNeighborsBinaryClassifier(BinaryClassifierLayerTest):
 
     def test_basic_knn_classifier(self):
-        knn_classifier = KNearestNeighborsClassifier(self.data_frame,
-                                                     self.prediction_column)
-
+        knn_classifier = component.getUtility(IKNearestNeighborsClassifier)
         assert_that(knn_classifier,
                     validly_provides(IKNearestNeighborsClassifier))
 
-        knn_classifier.train()
-        classification_accuracy = knn_classifier.scores.mean()
+        knn_classifier.train(self.data_frame, self.prediction_column)
 
-        assert_that(classification_accuracy, greater_than(0))
+        assert_that(knn_classifier.success_rate, greater_than(0))
 
 
 class TestKNearestNeighborsClassifier(MultiClassClassifierLayerTest):
     def test_basic_knn_classifier(self):
-        knn_classifier = KNearestNeighborsClassifier(self.data_frame,
-                                                     self.prediction_column)
+        knn_classifier = component.getUtility(IKNearestNeighborsClassifier)
 
         assert_that(knn_classifier,
                     validly_provides(IKNearestNeighborsClassifier))
 
-        knn_classifier.train()
-        classification_accuracy = knn_classifier.scores.mean()
+        knn_classifier.train(self.data_frame, self.prediction_column)
 
-        assert_that(classification_accuracy, greater_than(0))
+        assert_that(knn_classifier.success_rate, greater_than(0))

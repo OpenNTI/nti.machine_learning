@@ -9,11 +9,9 @@ __docformat__ = "restructuredtext en"
 
 from hamcrest import assert_that
 
+from zope import component
+
 from nti.testing.matchers import validly_provides
-
-from nti.machine_learning.algorithms.unsupervised.density import DBScan
-
-from nti.machine_learning.algorithms.unsupervised.geometric import KMeans
 
 from nti.machine_learning.algorithms.unsupervised.interfaces import IDBScan
 from nti.machine_learning.algorithms.unsupervised.interfaces import IKMeans
@@ -27,15 +25,15 @@ class TestUnsupervisedModels(UnsupervisedLearningLayerTest):
     """
 
     def test_kmeans(self):
-        kmeans = KMeans(self.example_frame, n_clusters=2)
+        kmeans = component.getUtility(IKMeans)
         assert_that(kmeans, validly_provides(IKMeans))
-        clusters = kmeans.cluster()
+        clusters = kmeans.cluster(self.example_frame, n_clusters=2)
         clusters = set(clusters)
         assert_that(len(clusters), 2)
 
     def test_dbscan(self):
-        dbscan = DBScan(self.example_frame, eps=15, min_samples=1)
+        dbscan = component.getUtility(IDBScan)
         assert_that(dbscan, validly_provides(IDBScan))
-        clusters = dbscan.cluster()
+        clusters = dbscan.cluster(self.example_frame, eps=15, min_samples=1)
         clusters = set(clusters)
         assert_that(len(clusters), 2)
