@@ -9,7 +9,7 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from sklearn.cross_validation import cross_val_score
+from sklearn.model_selection import cross_val_score
 
 from zope import interface
 
@@ -39,7 +39,7 @@ class KFoldCrossValidation(object):
     scoring:
         the metric used to evaluate the performance.
         When dealing with classification, the metric could be classification accuracy, precision, ROC/AUC etc.
-        The score is calculated using the function cross_val_score (imported from sklearn.cross_validation),
+        The score is calculated using the function cross_val_score (imported from sklearn.model_selection),
         the scoring value for classification accuracy = 'accuracy',
         the scoring value for ROC/AUC = 'roc_auc'
     """
