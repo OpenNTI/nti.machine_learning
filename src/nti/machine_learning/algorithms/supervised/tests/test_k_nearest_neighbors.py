@@ -35,6 +35,7 @@ class TestKNearestNeighborsBinaryClassifier(BinaryClassifierLayerTest):
 
 
 class TestKNearestNeighborsClassifier(MultiClassClassifierLayerTest):
+
     def test_basic_knn_multiclass_classifier(self):
         knn_classifier = component.getUtility(IKNearestNeighborsClassifier)
 

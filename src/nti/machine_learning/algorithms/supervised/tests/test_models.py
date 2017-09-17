@@ -57,15 +57,18 @@ class TestSupervisedModels(SupervisedLearningLayerTest):
 
     def test_k_nearest_neighbors_regressor(self):
         knn_regressor = component.getUtility(IKNearestNeighborsRegressor)
-        assert_that(knn_regressor, validly_provides(IKNearestNeighborsRegressor))
-        #train
-        knn_regressor.train(self.example_frame, self.example_prediction_columns)
+        assert_that(knn_regressor, 
+                    validly_provides(IKNearestNeighborsRegressor))
+        # train
+        knn_regressor.train(self.example_frame,
+                            self.example_prediction_columns)
         assert_that(has_property(knn_regressor, 'success_rate'))
 
     def test_k_nearest_neighbors_classifier(self):
         knn_classifier = component.getUtility(IKNearestNeighborsClassifier)
-        assert_that(knn_classifier, validly_provides(IKNearestNeighborsClassifier))
+        assert_that(knn_classifier, 
+                    validly_provides(IKNearestNeighborsClassifier))
         # train
-        knn_classifier.train(self.example_frame, self.example_prediction_columns)
+        knn_classifier.train(self.example_frame,
+                             self.example_prediction_columns)
         assert_that(knn_classifier, has_property('success_rate'))
-        
