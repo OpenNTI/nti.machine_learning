@@ -39,7 +39,7 @@ class KNearestNeighborsClassifier(SupervisedModel):
 @interface.implementer(IKNearestNeighborsRegressor)
 class KNearestNeighborsRegressor(SupervisedModel):
 
-    def classify(self, inputs):
+    def predict(self, inputs):
         return self.cls.predict(inputs)
 
     def train(self, data_frame, prediction_column, metric='neg_mean_squared_error', k=10, **kwargs):
