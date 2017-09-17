@@ -39,11 +39,11 @@ class KNearestNeighborsClassifier(SupervisedModel):
 @interface.implementer(IKNearestNeighborsRegressor)
 class KNearestNeighborsRegressor(SupervisedModel):
 
-    def classify(self, inputs):
+    def predict(self, inputs):
         return self.cls.predict(inputs)
 
     def train(self, data_frame, prediction_column, metric='neg_mean_squared_error', k=10, **kwargs):
-        super(KNearestNeighborsClassifier, self).train(data_frame, prediction_column)
+        super(KNearestNeighborsRegressor, self).train(data_frame, prediction_column)
         self.cls = KNeighborsRegressor(**kwargs)
         kf = KFoldCrossValidation(self.cls, self._data.get_frame_no_predictor(),
                                   self._data.get_predictors(), k, metric)
