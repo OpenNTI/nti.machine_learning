@@ -131,8 +131,7 @@ class RegressorLayerTest(unittest.TestCase):
 
     @classmethod
     def setUp(self):
-        boston  = load_boston()
+        boston = load_boston()
         self.data_frame = DataFrame(data=np.c_[boston['data'], boston['target']],
                                     columns=boston['feature_names'].tolist() + ['target'])
         self.prediction_column = ['target']
-
