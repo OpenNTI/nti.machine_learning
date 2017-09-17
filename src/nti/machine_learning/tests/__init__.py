@@ -12,6 +12,7 @@ import unittest
 import numpy as np
 
 from sklearn.datasets import load_iris
+from sklearn.datasets import load_boston
 from sklearn.datasets import load_breast_cancer
 
 from random import randint
@@ -122,3 +123,16 @@ class BinaryClassifierLayerTest(unittest.TestCase):
         self.data_frame = DataFrame(data=np.c_[data['data'], data['target']],
                                     columns=data['feature_names'].tolist() + ['target'])
         self.prediction_column = ['target']
+
+
+class RegressorLayerTest(unittest.TestCase):
+
+    layer = SharedConfiguringTestLayer
+
+    @classmethod
+    def setUp(self):
+        boston  = load_boston()
+        self.data_frame = DataFrame(data=np.c_[boston['data'], boston['target']],
+                                    columns=boston['feature_names'].tolist() + ['target'])
+        self.prediction_column = ['target']
+

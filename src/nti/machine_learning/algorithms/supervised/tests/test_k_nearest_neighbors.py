@@ -14,8 +14,10 @@ from zope import component
 
 from nti.testing.matchers import validly_provides
 
+from nti.machine_learning.algorithms.supervised.interfaces import IKNearestNeighborsRegressor
 from nti.machine_learning.algorithms.supervised.interfaces import IKNearestNeighborsClassifier
 
+from nti.machine_learning.tests import RegressorLayerTest
 from nti.machine_learning.tests import BinaryClassifierLayerTest
 from nti.machine_learning.tests import MultiClassClassifierLayerTest
 
@@ -33,7 +35,7 @@ class TestKNearestNeighborsBinaryClassifier(BinaryClassifierLayerTest):
 
 
 class TestKNearestNeighborsClassifier(MultiClassClassifierLayerTest):
-    def test_basic_knn_classifier(self):
+    def test_basic_knn_multiclass_classifier(self):
         knn_classifier = component.getUtility(IKNearestNeighborsClassifier)
 
         assert_that(knn_classifier,
@@ -42,3 +44,15 @@ class TestKNearestNeighborsClassifier(MultiClassClassifierLayerTest):
         knn_classifier.train(self.data_frame, self.prediction_column)
 
         assert_that(knn_classifier.success_rate, greater_than(0))
+
+
+class TestKNearestNeighborsRegressor(RegressorLayerTest):
+    def test_basic_knn_regressor(self):
+        knn_regressor = component.getUtility(IKNearestNeighborsRegressor)
+
+        assert_that(knn_regressor,
+                    validly_provides(IKNearestNeighborsRegressor))
+
+        knn_regressor.train(self.data_frame, self.prediction_column)
+
+        assert_that(abs(knn_regressor.success_rate), greater_than(0))
