@@ -8,18 +8,20 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import is_
-from hamcrest import assert_that
 from hamcrest import less_than
+from hamcrest import assert_that
 
 from nti.testing.matchers import validly_provides
 
-from nti.machine_learning.preprocessing.scaling import Scaler
-
 from nti.machine_learning.preprocessing.interfaces import IScaler
+
+from nti.machine_learning.preprocessing.scaling import Scaler
 
 from nti.machine_learning.preprocessing.tests import ScalerLayerTest
 
+
 class TestScaler(ScalerLayerTest):
+
     def test_standar_scaler(self):
         scaler = Scaler(self.X_train, 'standard')
         assert_that(scaler, validly_provides(IScaler))
@@ -79,4 +81,3 @@ class TestScaler(ScalerLayerTest):
         assert_that(len(X_transform), is_(3))
         assert_that(self.X_train[0][0], is_(1.0))
         assert_that(X_transform[0][0], less_than(1.0))
-
