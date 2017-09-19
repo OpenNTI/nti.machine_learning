@@ -30,3 +30,14 @@ class TestScaler(ScalerLayerTest):
 		assert_that(self.X_train[0][0], is_(1.0))
 		assert_that(X_transform[0][0], is_(0.0))
 
+	def test_min_max_scaler(self):
+		scaler = Scaler(self.X_train, 'min_max')
+		assert_that(scaler, validly_provides(IScaler))
+		assert_that(scaler.scaler_type, is_('min_max'))
+
+		X_transform = scaler.transform(self.X_train)
+		assert_that(len(X_transform), is_(3))
+		assert_that(self.X_train[0][0], is_(1.0))
+		assert_that(X_transform[0][0], is_(0.5))
+
+

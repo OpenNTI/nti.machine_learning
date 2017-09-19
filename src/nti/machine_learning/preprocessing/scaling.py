@@ -52,7 +52,11 @@ class Scaler(object):
                    'normal'   : _normalizer,
                    'quantile' : _quantile_transformer}
 
-        self.scaler = SCALERS[self.scaler_type](X_train, **kwargs)
+        if scaler_type in SCALERS:
+            self.scaler = SCALERS[self.scaler_type](X_train, **kwargs)
+        else:
+            self.scaler = None
+            logger.warning("Unrecoqnized scaler type")
 
 
     def transform(self, inputs):
