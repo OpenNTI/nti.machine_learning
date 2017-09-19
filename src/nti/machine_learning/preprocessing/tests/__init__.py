@@ -25,3 +25,12 @@ class ScalerLayerTest(unittest.TestCase):
     							 [2., 0., 0.],
     							 [0., 1., -1]])
 
+
+class EncoderLayerTest(unittest.TestCase):
+
+    layer = SharedConfiguringTestLayer
+
+    @classmethod
+    def setUp(self):
+    	self.original_array_numeric = [1, 2, 2, 6]
+    	self.original_array_nonnumeric = ["barcelona", "rome", "sf", "jakarta", "sf"]
