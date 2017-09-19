@@ -41,11 +41,11 @@ def _quantile_transformer(X_train, **kwargs):
 
 @interface.implementer(IScaler)
 class Scaler(object):
-    def __init__(X_train, scaler_type='standard', **kwargs):
+    def __init__(self, X_train, scaler_type, **kwargs):
         self.X_train = X_train
         self.scaler_type = scaler_type
 
-        SCALERS : {'standard' : _standard_scaler,
+        SCALERS = {'standard' : _standard_scaler,
                    'min_max'  : _min_max_scaler,
                    'max_abs'  : _max_abs_scaler,
                    'robust'   : _robust_scaler,
@@ -55,5 +55,5 @@ class Scaler(object):
         self.scaler = SCALERS[self.scaler_type](X_train, **kwargs)
 
 
-    def transfrom(self, inputs):
-        return self.scaler.transfrom(inputs)
+    def transform(self, inputs):
+        return self.scaler.transform(inputs)
