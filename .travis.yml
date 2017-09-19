@@ -4,7 +4,7 @@ python:
   - 2.7
   - 3.6
 script:
-  - coverage run -m zope.testrunner --test-path=src  --auto-color --auto-progress --all
+  - coverage run -m zope.testrunner
 after_success:
   - coveralls
 notifications:
