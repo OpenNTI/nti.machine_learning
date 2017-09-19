@@ -116,3 +116,8 @@ class IKNearestNeighborsRegressor(ISupervisedModel):
     """
     Outlines of a k-Nearest Neighbors regressor
     """
+
+class IEnsembleRandomForestClassifier(ISupervisedModel):
+    """
+    Outlines of a Random Forest Classifier
+    """
