@@ -21,20 +21,20 @@ from nti.machine_learning.tests import MultiClassClassifierLayerTest
 
 
 class TestEnsembleRandomForestClassifier(BinaryClassifierLayerTest):
-	def test_basic_random_forest_classifier(self):
-		random_forest_classifier = component.getUtility(IEnsembleRandomForestClassifier)
-		assert_that(random_forest_classifier,
-			        validly_provides(IEnsembleRandomForestClassifier))
+    def test_basic_random_forest_classifier(self):
+        random_forest_classifier = component.getUtility(IEnsembleRandomForestClassifier)
+        assert_that(random_forest_classifier,
+                    validly_provides(IEnsembleRandomForestClassifier))
 
-		random_forest_classifier.train(self.data_frame, self.prediction_column)
-		assert_that(random_forest_classifier.success_rate, greater_than(0))
+        random_forest_classifier.train(self.data_frame, self.prediction_column)
+        assert_that(random_forest_classifier.success_rate, greater_than(0))
 
 
 class TestMultiClassEnsembleRandomForestClassifier(MultiClassClassifierLayerTest):
-	def test_basic_multi_class_random_forest_classifier(self):
-		random_forest_classifier = component.getUtility(IEnsembleRandomForestClassifier)
-		assert_that(random_forest_classifier,
-			        validly_provides(IEnsembleRandomForestClassifier))
+    def test_basic_multi_class_random_forest_classifier(self):
+        random_forest_classifier = component.getUtility(IEnsembleRandomForestClassifier)
+        assert_that(random_forest_classifier,
+                    validly_provides(IEnsembleRandomForestClassifier))
 
-		random_forest_classifier.train(self.data_frame, self.prediction_column)
-		assert_that(random_forest_classifier.success_rate, greater_than(0))
+        random_forest_classifier.train(self.data_frame, self.prediction_column)
+        assert_that(random_forest_classifier.success_rate, greater_than(0))

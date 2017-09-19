@@ -21,7 +21,7 @@ from nti.machine_learning.tests import BinaryClassifierLayerTest
 from nti.machine_learning.tests import MultiClassClassifierLayerTest
 
 
-class TestLinearSupportVectorClassification(BinaryClassifierLayerTest):
+class TestLinearSupportVectorClassificationBinary(BinaryClassifierLayerTest):
 
     def test_basic_linear_svc(self):
         linear_svc = component.getUtility(ILinearSupportVectorClassification)
@@ -32,7 +32,7 @@ class TestLinearSupportVectorClassification(BinaryClassifierLayerTest):
         assert_that(linear_svc.success_rate, greater_than(0))
 
 
-class TestLinearSupportVectorClassification(MultiClassClassifierLayerTest):
+class TestLinearSupportVectorClassificationMultiClass(MultiClassClassifierLayerTest):
 
     def test_basic_multiclass_linear_svc(self):
         linear_svc = component.getUtility(ILinearSupportVectorClassification)
@@ -44,19 +44,18 @@ class TestLinearSupportVectorClassification(MultiClassClassifierLayerTest):
 
 
 class TestSVM(BinaryClassifierLayerTest):
-	def test_basic_svm(self):
-		svm = component.getUtility(ISVM)
-		assert_that(svm,
-			        validly_provides(ISVM))
-		svm.train(self.data_frame, self.prediction_column)
-		assert_that(svm.success_rate, greater_than(0))
+    def test_basic_svm(self):
+        svm = component.getUtility(ISVM)
+        assert_that(svm,
+                    validly_provides(ISVM))
+        svm.train(self.data_frame, self.prediction_column)
+        assert_that(svm.success_rate, greater_than(0))
 
 
 class TestMultiClassSVM(MultiClassClassifierLayerTest):
-	def test_basic_multiclass_svm(self):
-		svm = component.getUtility(ISVM)
-		assert_that(svm,
-			        validly_provides(ISVM))
-		svm.train(self.data_frame, self.prediction_column)
-		assert_that(svm.success_rate, greater_than(0))
-		
+    def test_basic_multiclass_svm(self):
+        svm = component.getUtility(ISVM)
+        assert_that(svm,
+                    validly_provides(ISVM))
+        svm.train(self.data_frame, self.prediction_column)
+        assert_that(svm.success_rate, greater_than(0))

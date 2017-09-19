@@ -20,8 +20,8 @@ from nti.machine_learning.algorithms.supervised.interfaces import IRegressor
 from nti.machine_learning.algorithms.supervised.interfaces import INeuralNetwork
 from nti.machine_learning.algorithms.supervised.interfaces import IKNearestNeighborsRegressor
 from nti.machine_learning.algorithms.supervised.interfaces import IKNearestNeighborsClassifier
-from nti.machine_learning.algorithms.supervised.interfaces import ILinearSupportVectorClassification
 from nti.machine_learning.algorithms.supervised.interfaces import IEnsembleRandomForestClassifier
+from nti.machine_learning.algorithms.supervised.interfaces import ILinearSupportVectorClassification
 
 from nti.machine_learning.tests import SupervisedLearningLayerTest
 
@@ -58,7 +58,7 @@ class TestSupervisedModels(SupervisedLearningLayerTest):
 
     def test_k_nearest_neighbors_regressor(self):
         knn_regressor = component.getUtility(IKNearestNeighborsRegressor)
-        assert_that(knn_regressor, 
+        assert_that(knn_regressor,
                     validly_provides(IKNearestNeighborsRegressor))
         # train
         knn_regressor.train(self.example_frame,
@@ -67,7 +67,7 @@ class TestSupervisedModels(SupervisedLearningLayerTest):
 
     def test_k_nearest_neighbors_classifier(self):
         knn_classifier = component.getUtility(IKNearestNeighborsClassifier)
-        assert_that(knn_classifier, 
+        assert_that(knn_classifier,
                     validly_provides(IKNearestNeighborsClassifier))
         # train
         knn_classifier.train(self.example_frame,
@@ -90,4 +90,5 @@ class TestSupervisedModels(SupervisedLearningLayerTest):
 
         ensemble_random_forest_classifier.train(self.example_frame,
                                                 self.example_prediction_columns)
-        assert_that(ensemble_random_forest_classifier, has_property('success_rate'))
+        assert_that(ensemble_random_forest_classifier,
+                    has_property('success_rate'))

@@ -19,12 +19,12 @@ from nti.machine_learning.algorithms.supervised.interfaces import IEnsembleRando
 
 from nti.machine_learning.evaluation.cross_validation import KFoldCrossValidation
 
+
 @interface.implementer(IEnsembleRandomForestClassifier)
 class EnsembleRandomForestClassifier(SupervisedModel):
-    
+
     def classify(self, inputs):
         self.cls.predict(inputs)
-
 
     def train(self, data_frame, prediction_column, metric='accuracy', k=10, **kwargs):
         super(EnsembleRandomForestClassifier, self).train(data_frame, prediction_column)
