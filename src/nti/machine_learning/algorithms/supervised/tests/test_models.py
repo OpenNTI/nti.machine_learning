@@ -20,7 +20,7 @@ from nti.machine_learning.algorithms.supervised.interfaces import IRegressor
 from nti.machine_learning.algorithms.supervised.interfaces import INeuralNetwork
 from nti.machine_learning.algorithms.supervised.interfaces import IKNearestNeighborsRegressor
 from nti.machine_learning.algorithms.supervised.interfaces import IKNearestNeighborsClassifier
-
+from nti.machine_learning.algorithms.supervised.interfaces import ILinearSupportVectorClassification
 
 from nti.machine_learning.tests import SupervisedLearningLayerTest
 
@@ -72,3 +72,12 @@ class TestSupervisedModels(SupervisedLearningLayerTest):
         knn_classifier.train(self.example_frame,
                              self.example_prediction_columns)
         assert_that(knn_classifier, has_property('success_rate'))
+
+    def test_linear_svc(self):
+        linear_svc = component.getUtility(ILinearSupportVectorClassification)
+        assert_that(linear_svc,
+                    validly_provides(ILinearSupportVectorClassification))
+
+        linear_svc.train(self.example_frame,
+                         self.example_prediction_columns)
+        assert_that(linear_svc, has_property('success_rate'))

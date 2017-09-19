@@ -8,6 +8,8 @@
 
     <utility factory=".support_vector_machine.SupportVectorMachine"
              provides=".interfaces.ISVM" />
+    <utility factory=".support_vector_machine.LinearSupportVectorClassification"
+             provides=".interfaces.ILinearSupportVectorClassification" />
 
     <utility factory=".regression.Regressor"
              provides=".interfaces.IRegressor" />

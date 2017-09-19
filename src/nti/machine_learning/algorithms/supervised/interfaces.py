@@ -94,6 +94,11 @@ class ISVM(ISupervisedModel):
     Outlines a Support Vector Machine learning model.
     """
 
+class ILinearSupportVectorClassification(ISupervisedModel):
+    """
+    Outlines a Linear Support Vector Classification
+    """
+
 
 class IRegressor(ISupervisedModel):
     """
