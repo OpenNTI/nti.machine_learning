@@ -33,7 +33,7 @@ class TestEncoder(EncoderLayerTest):
 		assert_that(transformed_array[2], is_(1))
 		assert_that(transformed_array[3], is_(2))
 
-	def test_label_encoder_numeric(self):
+	def test_label_encoder_nonnumeric(self):
 		label_encoder = Encoder(self.original_array_nonnumeric, 'label')
 	
 		assert_that(label_encoder.original_array[0], is_("barcelona"))
