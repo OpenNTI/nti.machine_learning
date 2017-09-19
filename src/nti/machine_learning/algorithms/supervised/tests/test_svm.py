@@ -31,6 +31,32 @@ class TestLinearSupportVectorClassification(BinaryClassifierLayerTest):
         linear_svc.train(self.data_frame, self.prediction_column)
         assert_that(linear_svc.success_rate, greater_than(0))
 
-        #knn_classifier.train(self.data_frame, self.prediction_column)
 
-        #assert_that(knn_classifier.success_rate, greater_than(0))
+class TestLinearSupportVectorClassification(MultiClassClassifierLayerTest):
+
+    def test_basic_multiclass_linear_svc(self):
+        linear_svc = component.getUtility(ILinearSupportVectorClassification)
+        assert_that(linear_svc,
+                    validly_provides(ILinearSupportVectorClassification))
+
+        linear_svc.train(self.data_frame, self.prediction_column)
+        assert_that(linear_svc.success_rate, greater_than(0))
+
+
+class TestSVM(BinaryClassifierLayerTest):
+	def test_basic_svm(self):
+		svm = component.getUtility(ISVM)
+		assert_that(svm,
+			        validly_provides(ISVM))
+		svm.train(self.data_frame, self.prediction_column)
+		assert_that(svm.success_rate, greater_than(0))
+
+
+class TestMultiClassSVM(MultiClassClassifierLayerTest):
+	def test_basic_multiclass_svm(self):
+		svm = component.getUtility(ISVM)
+		assert_that(svm,
+			        validly_provides(ISVM))
+		svm.train(self.data_frame, self.prediction_column)
+		assert_that(svm.success_rate, greater_than(0))
+		
