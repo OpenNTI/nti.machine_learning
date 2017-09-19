@@ -94,6 +94,11 @@ class ISVM(ISupervisedModel):
     Outlines a Support Vector Machine learning model.
     """
 
+class ILinearSupportVectorClassification(ISupervisedModel):
+    """
+    Outlines a Linear Support Vector Classification
+    """
+
 
 class IRegressor(ISupervisedModel):
     """
@@ -110,4 +115,9 @@ class IKNearestNeighborsClassifier(ISupervisedModel):
 class IKNearestNeighborsRegressor(ISupervisedModel):
     """
     Outlines of a k-Nearest Neighbors regressor
+    """
+
+class IEnsembleRandomForestClassifier(ISupervisedModel):
+    """
+    Outlines of a Random Forest Classifier
     """

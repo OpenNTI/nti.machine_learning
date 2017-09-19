@@ -8,6 +8,8 @@
 
     <utility factory=".support_vector_machine.SupportVectorMachine"
              provides=".interfaces.ISVM" />
+    <utility factory=".support_vector_machine.LinearSupportVectorClassification"
+             provides=".interfaces.ILinearSupportVectorClassification" />
 
     <utility factory=".regression.Regressor"
              provides=".interfaces.IRegressor" />
@@ -17,8 +19,10 @@
 
     <utility factory=".k_nearest_neighbors.KNearestNeighborsClassifier"
              provides=".interfaces.IKNearestNeighborsClassifier" />
-
     <utility factory=".k_nearest_neighbors.KNearestNeighborsRegressor"
              provides=".interfaces.IKNearestNeighborsRegressor" />
+
+    <utility factory=".ensemble.EnsembleRandomForestClassifier"
+             provides=".interfaces.IEnsembleRandomForestClassifier"/>
 
 </configure>
