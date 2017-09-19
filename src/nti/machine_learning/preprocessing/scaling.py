@@ -27,7 +27,7 @@ def _min_max_scaler(X_train, **kwargs):
     return MinMaxScaler(**kwargs).fit(X_train)
 
 def _max_abs_scaler(X_train, **kwargs):
-    return MinMaxScaler(**kwargs).fit(X_train)
+    return MaxAbsScaler(**kwargs).fit(X_train)
 
 def _robust_scaler(X_train, **kwargs):
     return RobustScaler(**kwargs).fit(X_train)
