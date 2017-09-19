@@ -15,15 +15,16 @@ import numpy as np
 
 from nti.machine_learning.tests import SharedConfiguringTestLayer
 
+
 class ScalerLayerTest(unittest.TestCase):
 
     layer = SharedConfiguringTestLayer
 
     @classmethod
     def setUp(self):
-    	self.X_train = np.array([[1., -1., 2.],
-    							 [2., 0., 0.],
-    							 [0., 1., -1]])
+        self.X_train = np.array([[1., -1., 2.],
+                                 [2., 0., 0.],
+                                 [0., 1., -1]])
 
 
 class EncoderLayerTest(unittest.TestCase):
@@ -32,5 +33,7 @@ class EncoderLayerTest(unittest.TestCase):
 
     @classmethod
     def setUp(self):
-    	self.original_array_numeric = [1, 2, 2, 6]
-    	self.original_array_nonnumeric = ["barcelona", "rome", "sf", "jakarta", "sf"]
+        self.original_array_numeric = [1, 2, 2, 6]
+        self.original_array_nonnumeric = [
+            "barcelona", "rome", "sf", "jakarta", "sf"
+        ]
