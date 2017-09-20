@@ -8,4 +8,8 @@
 
     <include package=".algorithms" />
 
+    <include package=".evaluation" />
+
+    <include package=".preprocessing" />
+
 </configure>
