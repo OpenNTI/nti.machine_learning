@@ -7,8 +7,6 @@
 from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-logger = __import__('logging').getLogger(__name__)
-
 from sklearn.cluster import KMeans as SK_KMeans
 
 from zope import interface
@@ -16,6 +14,8 @@ from zope import interface
 from nti.machine_learning.algorithms.unsupervised import AbstractClusterModel
 
 from nti.machine_learning.algorithms.unsupervised.interfaces import IKMeans
+
+logger = __import__('logging').getLogger(__name__)
 
 
 @interface.implementer(IKMeans)

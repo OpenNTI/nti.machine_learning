@@ -7,8 +7,6 @@
 from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-logger = __import__('logging').getLogger(__name__)
-
 from zope import interface
 
 from sklearn.neighbors import KNeighborsRegressor
@@ -20,6 +18,8 @@ from nti.machine_learning.algorithms.supervised.interfaces import IKNearestNeigh
 from nti.machine_learning.algorithms.supervised.interfaces import IKNearestNeighborsClassifier
 
 from nti.machine_learning.evaluation.cross_validation import KFoldCrossValidation
+
+logger = __import__('logging').getLogger(__name__)
 
 
 @interface.implementer(IKNearestNeighborsClassifier)

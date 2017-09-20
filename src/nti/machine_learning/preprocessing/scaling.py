@@ -7,8 +7,6 @@
 from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-logger = __import__('logging').getLogger(__name__)
-
 from zope import interface
 
 from sklearn.preprocessing import Normalizer
@@ -20,6 +18,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing.data import QuantileTransformer
 
 from nti.machine_learning.preprocessing.interfaces import IScaler
+
+logger = __import__('logging').getLogger(__name__)
 
 
 def standard_scaler(X_train, **kwargs):
