@@ -7,8 +7,6 @@
 from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-logger = __import__('logging').getLogger(__name__)
-
 try:
     import cPickle as pickle
 except ImportError:
@@ -23,6 +21,9 @@ from nti.machine_learning.interfaces import IModel
 from nti.machine_learning.interfaces import IDataSet
 
 FORMAT = '%(asctime)-15s %(message)s'
+
+logger = __import__('logging').getLogger(__name__)
+
 
 @interface.implementer(IModel)
 class Model(object):

@@ -7,13 +7,13 @@
 from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-logger = __import__('logging').getLogger(__name__)
-
 from sklearn.model_selection import cross_val_score
 
 from zope import interface
 
 from nti.machine_learning.evaluation.interfaces import IKFoldCrossValidation
+
+logger = __import__('logging').getLogger(__name__)
 
 
 @interface.implementer(IKFoldCrossValidation)

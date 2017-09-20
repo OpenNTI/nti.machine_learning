@@ -7,14 +7,14 @@
 from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-logger = __import__('logging').getLogger(__name__)
-
 from nti.machine_learning.interfaces import IModel
 from nti.machine_learning.interfaces import IDataSet
 
 from nti.schema.field import Int
 from nti.schema.field import Dict
 from nti.schema.field import TextLine
+
+logger = __import__('logging').getLogger(__name__)
 
 
 class IUnsupervisedModel(IModel):

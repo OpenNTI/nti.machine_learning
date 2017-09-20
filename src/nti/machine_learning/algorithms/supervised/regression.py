@@ -7,8 +7,6 @@
 from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-logger = __import__('logging').getLogger(__name__)
-
 from numpy import sqrt
 
 from sklearn.linear_model import LinearRegression
@@ -20,6 +18,8 @@ from nti.machine_learning.algorithms.supervised import SupervisedModel
 from nti.machine_learning.algorithms.supervised.interfaces import IRegressor
 
 from nti.machine_learning.evaluation.cross_validation import KFoldCrossValidation
+
+logger = __import__('logging').getLogger(__name__)
 
 
 @interface.implementer(IRegressor)

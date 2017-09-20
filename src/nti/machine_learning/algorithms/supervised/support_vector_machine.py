@@ -7,8 +7,6 @@
 from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-logger = __import__('logging').getLogger(__name__)
-
 from sklearn.svm import SVC
 from sklearn.svm import LinearSVC
 
@@ -20,6 +18,8 @@ from nti.machine_learning.algorithms.supervised.interfaces import ISVM
 from nti.machine_learning.algorithms.supervised.interfaces import ILinearSupportVectorClassification
 
 from nti.machine_learning.evaluation.cross_validation import KFoldCrossValidation
+
+logger = __import__('logging').getLogger(__name__)
 
 
 @interface.implementer(ISVM)

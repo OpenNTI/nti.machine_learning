@@ -10,11 +10,11 @@ If any of this gets actually used, it should be heavily optimized, ideally in C 
 from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-logger = __import__('logging').getLogger(__name__)
-
 from math import log
 from math import exp
 from math import sqrt
+
+logger = __import__('logging').getLogger(__name__)
 
 
 def distance(p1, p2):
