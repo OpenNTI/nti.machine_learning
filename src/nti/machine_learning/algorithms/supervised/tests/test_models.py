@@ -35,7 +35,8 @@ class TestSupervisedModels(SupervisedLearningLayerTest):
         svm = component.getUtility(ISVM)
         assert_that(svm, validly_provides(ISVM))
         # train
-        svm.train(self.example_frame, self.example_prediction_columns)
+        svm.train(self.example_frame, self.example_prediction_columns, 
+                  'accuracy', 10)
         assert_that(has_property(svm, 'success_rate'))
         assert_that(svm.success_rate, 1.0)
 
@@ -52,7 +53,8 @@ class TestSupervisedModels(SupervisedLearningLayerTest):
         assert_that(nn, validly_provides(INeuralNetwork))
         # train
         nn.train(self.example_frame, self.example_prediction_columns,
-                 layers=(3,), max_iter=500, solver='sgd')
+                 metric = 'accuracy', k = 10,
+                 hidden_layer_sizes=(3,), max_iter=500, solver='sgd')
         assert_that(nn, has_property('success_rate'))
         assert_that(nn.success_rate, greater_than(0.0))
 

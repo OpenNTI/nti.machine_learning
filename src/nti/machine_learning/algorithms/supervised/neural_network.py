@@ -29,11 +29,11 @@ class NeuralNetwork(SupervisedModel):
     def classify(self, inputs):
         return self.classifier.predict([inputs])
 
-    def train(self, data_frame, prediction_columns, layers, **kwargs):
+    def train(self, data_frame, prediction_columns, metric='accuracy', k=10, **kwargs):
         super(NeuralNetwork, self).train(data_frame,
                                          prediction_columns)
-        self.clf = MLPClassifier(hidden_layer_sizes=layers, **kwargs)
+        self.clf = MLPClassifier(**kwargs)
         kf = KFoldCrossValidation(self.clf, self._data.get_frame_no_predictor(),
-                                  self._data.get_predictors(), 10, 'accuracy')
+                                  self._data.get_predictors(), k, metric)
         scores = kf.compute_scores()
         self.success_rate = scores.mean()
