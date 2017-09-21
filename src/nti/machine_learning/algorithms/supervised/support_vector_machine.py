@@ -31,11 +31,11 @@ class SupportVectorMachine(SupervisedModel):
     def classify(self, inputs):
         return self.classifier.predict([inputs])
 
-    def train(self, data_frame, prediction_columns, **kwargs):
+    def train(self, data_frame, prediction_columns, metric='accuracy', k=10, **kwargs):
         super(SupportVectorMachine, self).train(data_frame, prediction_columns)
         self.clf = SVC(**kwargs)
         kf = KFoldCrossValidation(self.clf, self._data.get_frame_no_predictor(),
-                                  self._data.get_predictors(), 10, 'accuracy')
+                                  self._data.get_predictors(), k, metric)
         scores = kf.compute_scores()
         self.success_rate = scores.mean()
 
