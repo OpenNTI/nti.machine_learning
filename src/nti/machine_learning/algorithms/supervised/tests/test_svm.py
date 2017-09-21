@@ -48,7 +48,7 @@ class TestSVM(BinaryClassifierLayerTest):
         svm = component.getUtility(ISVM)
         assert_that(svm,
                     validly_provides(ISVM))
-        svm.train(self.data_frame, self.prediction_column)
+        svm.train(self.data_frame, self.prediction_column, 'accuracy', 10)
         assert_that(svm.success_rate, greater_than(0))
 
 
@@ -57,5 +57,5 @@ class TestMultiClassSVM(MultiClassClassifierLayerTest):
         svm = component.getUtility(ISVM)
         assert_that(svm,
                     validly_provides(ISVM))
-        svm.train(self.data_frame, self.prediction_column)
+        svm.train(self.data_frame, self.prediction_column, 'accuracy', 10)
         assert_that(svm.success_rate, greater_than(0))
