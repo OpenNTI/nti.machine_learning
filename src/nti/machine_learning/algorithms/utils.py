@@ -17,6 +17,8 @@ from math import log
 from math import exp
 from math import sqrt
 
+LOG_05 = log(0.5)
+
 logger = __import__('logging').getLogger(__name__)
 
 
@@ -47,7 +49,7 @@ def alpha(mean_dist):
     """
     Constant alpha value in similarity equation
     """
-    return -(log(0.5) / mean_dist)
+    return -(LOG_05 / mean_dist)
 
 
 def similarity(mean_dist, pointi, pointj):
