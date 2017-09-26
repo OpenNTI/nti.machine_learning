@@ -7,8 +7,11 @@ If any of this gets actually used, it should be heavily optimized, ideally in C 
 .. $Id$
 """
 
-from __future__ import print_function, absolute_import, division
-__docformat__ = "restructuredtext en"
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
+
+from six.moves import xrange
 
 from math import log
 from math import exp
@@ -23,7 +26,7 @@ def distance(p1, p2):
     """
     if not len(p1) == len(p2):
         raise ValueError('Points must have the same dimensions.')
-    summation = sum((p2[i] - p1[i])**2 for i in range(len(p1)))
+    summation = sum((p2[i] - p1[i])**2 for i in xrange(len(p1)))
     return sqrt(summation)
 
 
@@ -34,8 +37,8 @@ def mean_distance(points):
     result = 0
     n = len(points)
     nc2 = float(((n**2) - n) / 2)
-    for i in range(0, n):
-        for j in range(i + 1, n):
+    for i in xrange(0, n):
+        for j in xrange(i + 1, n):
             result += distance(points[i], points[j])
     return (1 / nc2) * result
 
@@ -61,9 +64,9 @@ def entropy(points, mean_dist):
     """
     entropies = []
     n = len(points)
-    for i in range(0, n):
+    for i in xrange(0, n):
         summation = 0
-        for j in range(0, n):
+        for j in xrange(0, n):
             if i == j:
                 continue
             sim = similarity(mean_dist, points[i], points[j])
@@ -72,7 +75,7 @@ def entropy(points, mean_dist):
                 # it almost one
                 sim = .999999
             summation += (sim * log(sim, 2)) + \
-                (1 - sim) * (log(1 - sim, 2))
+                         (1 - sim) * (log(1 - sim, 2))
         entropies.append(-summation)
     return entropies
 
@@ -82,5 +85,5 @@ def variance(values, mean):
     Variance of a set of values.
     """
     N = len(values)
-    sum_val = sum([(v - mean)**2 for v in values])
+    sum_val = sum((v - mean)**2 for v in values)
     return sum_val / float(N)
