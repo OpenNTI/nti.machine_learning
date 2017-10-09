@@ -31,7 +31,8 @@ class Regressor(SupervisedModel):
         kf = KFoldCrossValidation(self.clf, self._data.get_frame_no_predictor(),
                                   self._data.get_predictors(), 10, 'neg_mean_squared_error')
         scores = kf.compute_scores()
+        self.clf.fit(self._data.get_frame_no_predictor(), self._data.get_predictors())
         self.rmse = sqrt(abs(scores.mean()))
 
     def classify(self, inputs):
-        return self.classifier.predict(inputs)
+        return self.clf.predict(inputs)
