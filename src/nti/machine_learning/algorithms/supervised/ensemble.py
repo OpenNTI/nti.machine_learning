@@ -31,4 +31,5 @@ class EnsembleRandomForestClassifier(SupervisedModel):
         self.cls = RandomForestClassifier(**kwargs)
         kf = KFoldCrossValidation(self.cls, self._data.get_frame_no_predictor(),
                                   self._data.get_predictors(), k, metric)
+        self.cls.fit(self._data.get_frame_no_predictor(), self._data.get_predictors())
         self.success_rate = kf.compute_scores().mean()

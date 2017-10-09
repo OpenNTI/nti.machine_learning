@@ -27,7 +27,7 @@ class NeuralNetwork(SupervisedModel):
     """
 
     def classify(self, inputs):
-        return self.classifier.predict([inputs])
+        return self.clf.predict([inputs])
 
     def train(self, data_frame, prediction_columns, metric='accuracy', k=10, **kwargs):
         super(NeuralNetwork, self).train(data_frame,
@@ -36,4 +36,5 @@ class NeuralNetwork(SupervisedModel):
         kf = KFoldCrossValidation(self.clf, self._data.get_frame_no_predictor(),
                                   self._data.get_predictors(), k, metric)
         scores = kf.compute_scores()
+        self.clf.fit(self._data.get_frame_no_predictor(), self._data.get_predictors())
         self.success_rate = scores.mean()
