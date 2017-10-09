@@ -4,13 +4,11 @@
 .. $Id$
 """
 
-from __future__ import print_function, absolute_import, division
-__docformat__ = "restructuredtext en"
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
-try:
-    import cPickle as pickle
-except ImportError:
-    import pickle
+from six.moves import cPickle
 
 from pandas import Series
 from pandas import DataFrame
@@ -35,7 +33,7 @@ class Model(object):
         """
         Get the pickled model for persistent storage
         """
-        return pickle.dumps(self)
+        return cPickle.dumps(self)
 
 
 @interface.implementer(IDataSet)
